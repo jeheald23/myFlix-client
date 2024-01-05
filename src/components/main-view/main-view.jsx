@@ -13,7 +13,7 @@ const [movies, setMovies] = useState([
     "director":{name:"Andrew Niccol",
     bio:"Andrew Niccol is a New Zealand screenwriter, producer, and director. He wrote and directed Gattaca (1997), Simone (2002), Lord of War (2005), In Time (2011), The Host (2013), and Good Kill (2014).He wrote and co-produced The Truman Show, which earned him a nomination for the Academy Award for Best Original Screenplay and won him the BAFTA Award in the same category. His films tend to explore social, cultural and political issues, as well as artificial realities, simulations and the male gaze.",
     birthYear:"1964"},
-    image: "../../img/gattaca.png",
+    image: "./img/gattaca.png",
     featured:false,
     actors:["Ethan Hawke,", " ", "Uma Thurman,", " ", "Jude Law"]
 },
