@@ -5706,7 +5706,7 @@ const MainView = ()=>{
                 bio: "Andrew Niccol is a New Zealand screenwriter, producer, and director. He wrote and directed Gattaca (1997), Simone (2002), Lord of War (2005), In Time (2011), The Host (2013), and Good Kill (2014).He wrote and co-produced The Truman Show, which earned him a nomination for the Academy Award for Best Original Screenplay and won him the BAFTA Award in the same category. His films tend to explore social, cultural and political issues, as well as artificial realities, simulations and the male gaze.",
                 birthYear: "1964"
             },
-            image: "/img/gattaca.png",
+            image: "../../img/gattaca.png",
             featured: false,
             actors: [
                 "Ethan Hawke,",
@@ -5730,7 +5730,7 @@ const MainView = ()=>{
                 bio: "Greta Celeste Gerwig is an American actress, writer, and director. Initially known for working on mumblecore films, she has since expanded from acting in and co-writing independent films to directing major studio films. Gerwig was included in the annual Time 100 list of the most influential people in the world in 2018.",
                 birthYear: 1983
             },
-            image: "/img/littlewomen.png",
+            image: "../../img/littlewomen.png",
             featured: false,
             actors: [
                 "Saoirse Ronan,",
@@ -5756,7 +5756,7 @@ const MainView = ()=>{
                 bio: "David Keith Lynch is an American filmmaker, painter, visual artist, musician and actor. Lynch has received critical acclaim for his films, which are often distinguished by their surrealist qualities. He has received numerous accolades, including the Golden Lion in 2006 and an Honorary Academy Award in 2019.",
                 birthYear: "1946"
             },
-            image: "/img/mullhollanddrive.png",
+            image: "../../img/mulhollanddrive.png",
             actors: [
                 "Naomi Watts,",
                 " ",
@@ -5797,7 +5797,7 @@ const MainView = ()=>{
         columnNumber: 5
     }, undefined);
 };
-_s(MainView, "E4G3OFaE1iezxjuu3MTAsPKIYDc=");
+_s(MainView, "hONONpX8jE8dhsC1VvKYNIMF0w8=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
