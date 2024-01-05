@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+import gattaca from "../../images/gattaca.png";
+import littlewomen from "../../images/littlewomen.png";
+import mulhollanddrive from "../../images/mulhollanddrive.png";
 
 export const MainView = () => {
 const [movies, setMovies] = useState([
@@ -13,7 +16,7 @@ const [movies, setMovies] = useState([
     "director":{name:"Andrew Niccol",
     bio:"Andrew Niccol is a New Zealand screenwriter, producer, and director. He wrote and directed Gattaca (1997), Simone (2002), Lord of War (2005), In Time (2011), The Host (2013), and Good Kill (2014).He wrote and co-produced The Truman Show, which earned him a nomination for the Academy Award for Best Original Screenplay and won him the BAFTA Award in the same category. His films tend to explore social, cultural and political issues, as well as artificial realities, simulations and the male gaze.",
     birthYear:"1964"},
-    image: "./img/gattaca.png",
+    image: gattaca,
     featured:false,
     actors:["Ethan Hawke,", " ", "Uma Thurman,", " ", "Jude Law"]
 },
@@ -26,7 +29,7 @@ const [movies, setMovies] = useState([
     director:{name:"Greta Gerwig",
     bio:"Greta Celeste Gerwig is an American actress, writer, and director. Initially known for working on mumblecore films, she has since expanded from acting in and co-writing independent films to directing major studio films. Gerwig was included in the annual Time 100 list of the most influential people in the world in 2018.",
     birthYear:1983},
-    image:"../../img/littlewomen.png",
+    image:littlewomen,
     featured:false,
     actors:["Saoirse Ronan,", " ", "Emma Watson,", " ", "Florence Pugh,"," ", "Laura Dern"]
 },
@@ -39,7 +42,7 @@ const [movies, setMovies] = useState([
     director: {name: "David Lynch",
     bio:"David Keith Lynch is an American filmmaker, painter, visual artist, musician and actor. Lynch has received critical acclaim for his films, which are often distinguished by their surrealist qualities. He has received numerous accolades, including the Golden Lion in 2006 and an Honorary Academy Award in 2019.",
     birthYear:"1946"},
-    image:"../../img/mulhollanddrive.png",
+    image:mulhollanddrive,
     actors: ["Naomi Watts,", " ", "Laura Harring"],
     },
 ]);
