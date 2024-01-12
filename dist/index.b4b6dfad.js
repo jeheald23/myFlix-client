@@ -5688,102 +5688,37 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _movieCard = require("../movie-card/movie-card");
 var _movieView = require("../movie-view/movie-view");
-var _gattacaPng = require("../../images/gattaca.png");
-var _gattacaPngDefault = parcelHelpers.interopDefault(_gattacaPng);
-var _littlewomenPng = require("../../images/littlewomen.png");
-var _littlewomenPngDefault = parcelHelpers.interopDefault(_littlewomenPng);
-var _mulhollanddrivePng = require("../../images/mulhollanddrive.png");
-var _mulhollanddrivePngDefault = parcelHelpers.interopDefault(_mulhollanddrivePng);
 var _s = $RefreshSig$();
 const MainView = ()=>{
     _s();
-    const [movies, setMovies] = (0, _react.useState)([
-        {
-            id: 1,
-            title: "Gattaca",
-            description: "A genetically inferior man assumes the identity of a superior one in order to pursue his lifelong dream of space travel.",
-            genre: {
-                name: "Science Fiction",
-                description: "Science fiction (sometimes shortened to SF or sci-fi) is a genre of speculative fiction, which typically deals with imaginative and futuristic concepts such as advanced science and technology, space exploration, time travel, parallel universes, and extraterrestrial life."
-            },
-            releaseYear: "1997",
-            "director": {
-                name: "Andrew Niccol",
-                bio: "Andrew Niccol is a New Zealand screenwriter, producer, and director. He wrote and directed Gattaca (1997), Simone (2002), Lord of War (2005), In Time (2011), The Host (2013), and Good Kill (2014).He wrote and co-produced The Truman Show, which earned him a nomination for the Academy Award for Best Original Screenplay and won him the BAFTA Award in the same category. His films tend to explore social, cultural and political issues, as well as artificial realities, simulations and the male gaze.",
-                birthYear: "1964"
-            },
-            image: (0, _gattacaPngDefault.default),
-            featured: false,
-            actors: [
-                "Ethan Hawke,",
-                " ",
-                "Uma Thurman,",
-                " ",
-                "Jude Law"
-            ]
-        },
-        {
-            id: 2,
-            title: "Little Women",
-            description: "Jo March reflects back and forth on her life, telling the beloved story of the March sisters - four young women, each determined to live life on her own terms.",
-            genre: {
-                name: "Drama",
-                description: "In film and television, drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone."
-            },
-            releaseYear: "2019",
-            director: {
-                name: "Greta Gerwig",
-                bio: "Greta Celeste Gerwig is an American actress, writer, and director. Initially known for working on mumblecore films, she has since expanded from acting in and co-writing independent films to directing major studio films. Gerwig was included in the annual Time 100 list of the most influential people in the world in 2018.",
-                birthYear: 1983
-            },
-            image: (0, _littlewomenPngDefault.default),
-            featured: false,
-            actors: [
-                "Saoirse Ronan,",
-                " ",
-                "Emma Watson,",
-                " ",
-                "Florence Pugh,",
-                " ",
-                "Laura Dern"
-            ]
-        },
-        {
-            id: 3,
-            title: "Mulholland Drive",
-            description: "After a car wreck on the winding Mulholland Drive renders a woman amnesiac, she and a perky Hollywood-hopeful search for clues and answers across Los Angeles in a twisting venture beyond dreams and reality.",
-            genre: {
-                name: "Thriller",
-                description: "Thriller is a genre of fiction with numerous, often overlapping, subgenres, including crime, horror, and detective fiction. Thrillers are characterized and defined by the moods they elicit, giving their audiences heightened feelings of suspense, excitement, surprise, anticipation and anxiety."
-            },
-            releaseYear: "2001",
-            director: {
-                name: "David Lynch",
-                bio: "David Keith Lynch is an American filmmaker, painter, visual artist, musician and actor. Lynch has received critical acclaim for his films, which are often distinguished by their surrealist qualities. He has received numerous accolades, including the Golden Lion in 2006 and an Honorary Academy Award in 2019.",
-                birthYear: "1946"
-            },
-            image: (0, _mulhollanddrivePngDefault.default),
-            actors: [
-                "Naomi Watts,",
-                " ",
-                "Laura Harring"
-            ]
-        }
-    ]);
+    const [movies, setMovies] = (0, _react.useState)([]);
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
+    (0, _react.useEffect)(()=>{
+        fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/movies").then((response)=>response.json()).then((data)=>{
+            const moviesFromApi = data.docs.map((doc)=>{
+                return {
+                    id: doc.key,
+                    title: doc.title,
+                    image: doc.image_url,
+                    director: doc.director_name?.[0]
+                };
+            });
+            setMovies(moviesFromApi);
+        });
+    }, []);
     if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
         movie: selectedMovie,
         onBackClick: ()=>setSelectedMovie(null)
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 54,
+        lineNumber: 31,
         columnNumber: 7
     }, undefined);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "The list is empty!"
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 59,
+        lineNumber: 36,
         columnNumber: 12
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -5794,16 +5729,16 @@ const MainView = ()=>{
                 }
             }, movie.id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 65,
+                lineNumber: 42,
                 columnNumber: 9
             }, undefined))
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 63,
+        lineNumber: 40,
         columnNumber: 5
     }, undefined);
 };
-_s(MainView, "E1Q2OduhGVG36JYESGCFucX9Sz4=");
+_s(MainView, "PO+XgOji7E32nFJj3H5UPLPJ7w4=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
@@ -5813,7 +5748,7 @@ $RefreshReg$(_c, "MainView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"3OECH","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"6DRMH","react":"21dqq","../movie-card/movie-card":"bwuIu","../movie-view/movie-view":"ggaUx","../../images/gattaca.png":"ezGa9","../../images/littlewomen.png":"6Biqw","../../images/mulhollanddrive.png":"dF2EF"}],"3OECH":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"3OECH","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"6DRMH","react":"21dqq","../movie-card/movie-card":"bwuIu","../movie-view/movie-view":"ggaUx"}],"3OECH":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -6284,51 +6219,7 @@ $RefreshReg$(_c, "MovieView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"3OECH","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"6DRMH"}],"ezGa9":[function(require,module,exports) {
-module.exports = require("3570d4ea6ac5a342").getBundleURL("byUka") + "gattaca.a7b056d2.png" + "?" + Date.now();
-
-},{"3570d4ea6ac5a342":"ubnSa"}],"ubnSa":[function(require,module,exports) {
-"use strict";
-var bundleURL = {};
-function getBundleURLCached(id) {
-    var value = bundleURL[id];
-    if (!value) {
-        value = getBundleURL();
-        bundleURL[id] = value;
-    }
-    return value;
-}
-function getBundleURL() {
-    try {
-        throw new Error();
-    } catch (err) {
-        var matches = ("" + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
-        if (matches) // The first two stack frames will be this function and getBundleURLCached.
-        // Use the 3rd one, which will be a runtime in the original bundle.
-        return getBaseURL(matches[2]);
-    }
-    return "/";
-}
-function getBaseURL(url) {
-    return ("" + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, "$1") + "/";
-}
-// TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
-function getOrigin(url) {
-    var matches = ("" + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
-    if (!matches) throw new Error("Origin not found");
-    return matches[0];
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-exports.getOrigin = getOrigin;
-
-},{}],"6Biqw":[function(require,module,exports) {
-module.exports = require("5a5c2a21332fe5a9").getBundleURL("byUka") + "littlewomen.d538ceb3.png" + "?" + Date.now();
-
-},{"5a5c2a21332fe5a9":"ubnSa"}],"dF2EF":[function(require,module,exports) {
-module.exports = require("59d390ef3b37a4e6").getBundleURL("byUka") + "mulhollanddrive.6143223d.png" + "?" + Date.now();
-
-},{"59d390ef3b37a4e6":"ubnSa"}],"lJZlQ":[function() {},{}],"lOjBx":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"3OECH","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"6DRMH"}],"lJZlQ":[function() {},{}],"lOjBx":[function(require,module,exports) {
 "use strict";
 var m = require("aaccff5d309d9239");
 var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
