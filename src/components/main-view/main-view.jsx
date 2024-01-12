@@ -15,7 +15,6 @@ useEffect(() => {
     .then((data) => {
       const moviesFromApi = data.map((movie) => {
         return {
-          id: doc.key,
           title: movie.title,
           image: movie.image,
           director: movie.director_name?.[0]
