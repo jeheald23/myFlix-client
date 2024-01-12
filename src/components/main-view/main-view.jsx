@@ -15,6 +15,7 @@ useEffect(() => {
     .then((data) => {
         const moviesFromApi = data.map((movie) => {
           return {
+          image: movie.imagePath,
           title: movie.title,
           releaseYear: movie.releaseYear,
           description: movie.description,
