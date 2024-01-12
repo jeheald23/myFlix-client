@@ -15,17 +15,16 @@ useEffect(() => {
     .then((data) => {
         const moviesFromApi = data.map((movie) => {
           return {
-          Title: movie.title,
-          ReleaseYear: movie.releaseYear,
-          Description: movie.description,
-          Genre: movie.genre.name,
-          GenreDescription: movie.genre.description,
-          Director: movie.director.name,
-          Bio: movie.director.bio,
-          Birthyear: movie.director.birthYear,
-          DeathYear: movie.director.deathYear,
-          Featured:movie.featured,
-          Actors: movie.actors
+          title: movie.title,
+          releaseYear: movie.releaseYear,
+          description: movie.description,
+          genre: movie.genre.name,
+          genreDescription: movie.genre.description,
+          director: movie.director.name,
+          bio: movie.director.bio,
+          birthYear: movie.director.birthYear,
+          featured:movie.featured,
+          actors: movie.actors
           };
         });
 
