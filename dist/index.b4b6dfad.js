@@ -5701,10 +5701,10 @@ const MainView = ()=>{
                     Title: movie.title,
                     Description: movie.description,
                     Genre: {
-                        Name: movie.Genre.name
+                        Name: movie.genre.name
                     },
                     Director: {
-                        Name: movie.Director.name
+                        Name: movie.director.name
                     }
                 };
             });
