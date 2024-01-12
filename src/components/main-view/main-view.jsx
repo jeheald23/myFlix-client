@@ -15,15 +15,18 @@ useEffect(() => {
     .then((data) => {
         const moviesFromApi = data.map((movie) => {
           return {
-          image: movie.imagePath,
+          image: movie.image,
           title: movie.title,
           releaseYear: movie.releaseYear,
           description: movie.description,
-          genre: movie.genre.name,
-          genreDescription: movie.genre.description,
-          director: movie.director.name,
-          bio: movie.director.bio,
-          birthYear: movie.director.birthYear,
+          genre: {
+            name: movie.genre.name,
+            description: movie.genre.description},
+          director: {
+            name: movie.director.name,
+            bio: movie.director.bio,
+            birthYear: movie.director.birthYear,
+            deathYear: movie.director.deathYear},
           featured:movie.featured,
           actors: movie.actors
           };
