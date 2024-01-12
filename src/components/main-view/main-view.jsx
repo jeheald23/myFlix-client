@@ -13,12 +13,12 @@ useEffect(() => {
   fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/movies")
     .then((response) => response.json())
     .then((data) => {
-      const moviesFromApi = data.docs.map((doc) => {
+      const moviesFromApi = data.map((movie) => {
         return {
           id: doc.key,
-          title: doc.title,
-          image: doc.image_url,
-          director: doc.director_name?.[0]
+          title: movie.title,
+          image: movie.image,
+          director: movie.director_name?.[0]
         };
       });
 

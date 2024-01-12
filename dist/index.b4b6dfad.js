@@ -5695,12 +5695,21 @@ const MainView = ()=>{
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
     (0, _react.useEffect)(()=>{
         fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/movies").then((response)=>response.json()).then((data)=>{
+<<<<<<< Updated upstream
             const moviesFromApi = data.docs.map((doc)=>{
                 return {
                     id: doc.key,
                     title: doc.title,
                     image: doc.image_url,
                     director: doc.director_name?.[0]
+=======
+            const moviesFromApi = data.map((movie)=>{
+                return {
+                    id: doc.key,
+                    title: movie.title,
+                    image: movie.image,
+                    director: movie.director_name?.[0]
+>>>>>>> Stashed changes
                 };
             });
             setMovies(moviesFromApi);
