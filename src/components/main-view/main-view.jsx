@@ -13,24 +13,19 @@ useEffect(() => {
   fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/movies")
     .then((response) => response.json())
     .then((data) => {
-      const moviesFromApi = data.map((movie) => {
-        return {
-          title: movie.title,
-          image: movie.image,
-          director: movie.director.name,
-          directorBio: movie.director.bio,
-          directorBirth: movie.director.directorBirth,
-          directorDeath: movie.director.directorDeath,
-          genre: movie.genre.name,
-          genreDescription: movie.genre.description,
-          description: movie.description,
-          actors: movie.actors,
-          featured: movie.featured, 
-          releaseYear: movie.releaseYear,
-          id: movie._id,
-
-        };
-      });
+        const moviesFromApi = data.map((movie) => {
+          return {
+            _id: movie._id,
+            Title: movie.Title,
+            Description: movie.Description,
+            Genre: {
+                Name: movie.Genre.Name
+            },
+            Director: {
+                Name: movie.Director.Name
+            }
+          };
+        });
 
       setMovies(moviesFromApi);
     });
