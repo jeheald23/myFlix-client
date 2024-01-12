@@ -5698,13 +5698,16 @@ const MainView = ()=>{
             const moviesFromApi = data.map((movie)=>{
                 return {
                     Title: movie.title,
+                    ReleaseYear: movie.releaseYear,
                     Description: movie.description,
-                    Genre: {
-                        Name: movie.genre.name
-                    },
-                    Director: {
-                        Name: movie.director.name
-                    }
+                    Genre: movie.genre.name,
+                    GenreDescription: movie.genre.description,
+                    Director: movie.director.name,
+                    Bio: movie.director.bio,
+                    Birthyear: movie.director.birthYear,
+                    DeathYear: movie.director.deathYear,
+                    Featured: movie.featured,
+                    Actors: movie.actors
                 };
             });
             setMovies(moviesFromApi);
@@ -5715,14 +5718,14 @@ const MainView = ()=>{
         onBackClick: ()=>setSelectedMovie(null)
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 35,
+        lineNumber: 38,
         columnNumber: 7
     }, undefined);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "The list is empty!"
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 40,
+        lineNumber: 43,
         columnNumber: 12
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -5733,12 +5736,12 @@ const MainView = ()=>{
                 }
             }, movie.id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 46,
+                lineNumber: 49,
                 columnNumber: 9
             }, undefined))
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 44,
+        lineNumber: 47,
         columnNumber: 5
     }, undefined);
 };
