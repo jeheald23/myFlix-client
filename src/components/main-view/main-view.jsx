@@ -17,7 +17,18 @@ useEffect(() => {
         return {
           title: movie.title,
           image: movie.image,
-          director: movie.director_name?.[0]
+          director: movie.director.name,
+          directorBio: movie.director.bio,
+          directorBirth: movie.director.directorBirth,
+          directorDeath: movie.director.directorDeath,
+          genre: movie.genre.name,
+          genreDescription: movie.genre.description,
+          description: movie.description,
+          actors: movie.actors,
+          featured: movie.featured, 
+          releaseYear: movie.releaseYear,
+          id: movie._id,
+
         };
       });
 
