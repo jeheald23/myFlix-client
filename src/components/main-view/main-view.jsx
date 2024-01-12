@@ -16,13 +16,13 @@ useEffect(() => {
         const moviesFromApi = data.map((movie) => {
           return {
             _id: movie._id,
-            Title: movie.Title,
-            Description: movie.Description,
+            Title: movie.title,
+            Description: movie.description,
             Genre: {
-                Name: movie.Genre.Name
+                Name: movie.Genre.name
             },
             Director: {
-                Name: movie.Director.Name
+                Name: movie.Director.name
             }
           };
         });
