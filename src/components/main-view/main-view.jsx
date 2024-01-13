@@ -13,6 +13,7 @@ useEffect(() => {
   fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/movies")
     .then((response) => response.json())
     .then((data) => {
+<<<<<<< Updated upstream
       const moviesFromApi = data.docs.map((doc) => {
         return {
           id: doc.key,
@@ -21,6 +22,24 @@ useEffect(() => {
           director: doc.director_name?.[0]
         };
       });
+=======
+        const moviesFromApi = data.map((movie) => {
+          return {
+          image: movie.image,
+          title: movie.title,
+          releaseYear: movie.releaseYear,
+          description: movie.description,
+          genre: {
+            name: movie.genre.name,
+            description: movie.genre.description},
+          director: {
+            name: movie.director.name,
+            bio: movie.director.bio},
+          featured:movie.featured,
+          actors: movie.actors
+          };
+        });
+>>>>>>> Stashed changes
 
       setMovies(moviesFromApi);
     });

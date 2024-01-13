@@ -33,10 +33,17 @@ export const MovieView = ({ movie, onBackClick }) => {
           <span>Bio: </span>
           <span>{movie.director.bio}</span>
         </div>
+<<<<<<< Updated upstream
         <div>  
            <span>Birth Year: </span>
            <span>{movie.director.birthYear}</span>
         </div>
+=======
+          <div>
+            <span>Actors: </span>
+            <span>{movie.actors}</span>
+          </div>
+>>>>>>> Stashed changes
           <div>
           <span>Featured: </span>
           <span>{movie.featured}</span>
@@ -47,5 +54,5 @@ export const MovieView = ({ movie, onBackClick }) => {
           </div>
           <button onClick={onBackClick}>Back</button>
       </div>
-    );
-  };
+        );
+    };
