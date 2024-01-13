@@ -5697,12 +5697,6 @@ const MainView = ()=>{
         fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/movies").then((response)=>response.json()).then((data)=>{
             const moviesFromApi = data.docs.map((doc)=>{
                 return {
-<<<<<<< Updated upstream
-                    id: doc.key,
-                    title: doc.title,
-                    image: doc.image_url,
-                    director: doc.director_name?.[0]
-=======
                     image: movie.image,
                     title: movie.title,
                     releaseYear: movie.releaseYear,
@@ -5717,7 +5711,6 @@ const MainView = ()=>{
                     },
                     featured: movie.featured,
                     actors: movie.actors
->>>>>>> Stashed changes
                 };
             });
             setMovies(moviesFromApi);
@@ -5728,22 +5721,14 @@ const MainView = ()=>{
         onBackClick: ()=>setSelectedMovie(null)
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-<<<<<<< Updated upstream
-        lineNumber: 31,
-=======
         lineNumber: 39,
->>>>>>> Stashed changes
         columnNumber: 7
     }, undefined);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "The list is empty!"
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-<<<<<<< Updated upstream
-        lineNumber: 36,
-=======
         lineNumber: 44,
->>>>>>> Stashed changes
         columnNumber: 12
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -5754,20 +5739,12 @@ const MainView = ()=>{
                 }
             }, movie.id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-<<<<<<< Updated upstream
-                lineNumber: 42,
-=======
                 lineNumber: 50,
->>>>>>> Stashed changes
                 columnNumber: 9
             }, undefined))
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-<<<<<<< Updated upstream
-        lineNumber: 40,
-=======
         lineNumber: 48,
->>>>>>> Stashed changes
         columnNumber: 5
     }, undefined);
 };
@@ -6933,53 +6910,6 @@ const MovieView = ({ movie, onBackClick })=>{
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 children: [
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-<<<<<<< Updated upstream
-                        children: "Birth Year: "
-                    }, void 0, false, {
-                        fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 37,
-                        columnNumber: 12
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: movie.director.birthYear
-                    }, void 0, false, {
-                        fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 38,
-                        columnNumber: 12
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 36,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: "Featured: "
-                    }, void 0, false, {
-                        fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 41,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: movie.featured
-                    }, void 0, false, {
-                        fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 42,
-                        columnNumber: 11
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 40,
-                columnNumber: 11
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-=======
->>>>>>> Stashed changes
                         children: "Actors: "
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
@@ -6999,8 +6929,6 @@ const MovieView = ({ movie, onBackClick })=>{
                 lineNumber: 36,
                 columnNumber: 11
             }, undefined),
-<<<<<<< Updated upstream
-=======
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 children: [
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
@@ -7023,17 +6951,12 @@ const MovieView = ({ movie, onBackClick })=>{
                 lineNumber: 40,
                 columnNumber: 11
             }, undefined),
->>>>>>> Stashed changes
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                 onClick: onBackClick,
                 children: "Back"
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-<<<<<<< Updated upstream
-                lineNumber: 48,
-=======
                 lineNumber: 44,
->>>>>>> Stashed changes
                 columnNumber: 11
             }, undefined)
         ]
