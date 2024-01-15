@@ -6,7 +6,6 @@ export const LoginView = ({ onLoggedIn }) => {
   const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
-
     event.preventDefault();
 
     const data = {
@@ -65,7 +64,7 @@ export const LoginView = ({ onLoggedIn }) => {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          minLength="8"  required
+          required
         />
       </label>
       <button type="submit">Submit</button>
