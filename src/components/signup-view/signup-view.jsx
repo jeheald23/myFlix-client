@@ -10,29 +10,27 @@ export const SignupView = () => {
     event.preventDefault();
 
     const data = {
-        Username: username,
-        Password: password,
-        Email: email,
-        Birthday: birthday,
-      }
-
-
-      fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/users", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }).then((response) => {
-        if (response.ok) {
-          alert("Signup successful");
-          window.location.reload();
-        } else {
-          alert("Signup failed");
-        }
-      });
+      Username: username,
+      Password: password,
+      Email: email,
+      Birthday: birthday
     };
 
+    fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/users", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then((response) => {
+      if (response.ok) {
+        alert("Signup successful");
+        window.location.reload();
+      } else {
+        alert("Signup failed");
+      }
+    });
+  };
 
   return (
     <form onSubmit={handleSubmit}>

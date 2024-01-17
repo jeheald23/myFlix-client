@@ -8,37 +8,46 @@ import { SignupView } from "../signup-view/signup-view";
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
-  const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
   const [user, setUser] = useState(storedUser? storedUser : null);
   const [token, setToken] = useState(storedToken? storedToken : null);
+  const [movies, setMovies] = useState([]);
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
+  
   if (!user) {
     return (
       <>
-      <LoginView
-        onLoggedIn={(user, token) => {
+        <LoginView onLoggedIn={(user, token) => {
           setUser(user);
           setToken(token);
         }} />
-      or  
-      <SignupView />
+        or
+        <SignupView />
       </>
     );
   }
 
-  useEffect(() => {
+  if (!user) {
+    return (
+      <LoginView
+        onLoggedIn={(user, token) => {
+          setUser(user);
+          setToken(token);
+        }}
+      />
+    );
+  }
 
-    if (!token) {
+  useEffect(() => {
+      if (!token) {
       return;
     }
 
-    fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/movies", {
+    fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/login", {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         const moviesFromApi = data.map((movie) => {
           return {
             image: movie.image,
@@ -60,11 +69,7 @@ export const MainView = () => {
         setMovies(moviesFromApi);
       });
   }, [token]);
-
-  if (!user) {
-    return <LoginView onLoggedIn={(user) => setUser(user)} />;
-  }
-
+   
   if (selectedMovie) {
     return (
       <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
