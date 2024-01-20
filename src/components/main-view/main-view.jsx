@@ -11,49 +11,38 @@ export const MainView = () => {
   const [token, setToken] = useState(storedToken || null);
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("Inside useEffect");
-    if (!user && token) {
-      console.log("Fetching movies...");
+    if (!token) {
       fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/movies", {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}` }
       })
-        .then((response) => {
-          console.log("Response status:", response.status);
-          return response.json();
-        })
+        .then((response) => response.json())
         .then((data) => {
-          console.log("Movies data:", data);
-          const moviesFromApi = data.map((movie) => ({
-            id: movie._id.$oid,
-            title: movie.title,
-            releaseYear: movie.releaseYear,
-            image: movie.image,
-            description: movie.description,
-            genre: {
-              name: movie.genre.name,
-              description: movie.genre.description,
-            },
-            director: {
-              name: movie.director.name,
-              bio: movie.director.bio,
-            },
-            actors: movie.actors,
-            featured: movie.featured,
-          }));
+          const moviesFromApi = data.map((movie) => {
+            return {
+              id: movie._id,
+              title: movie.title,
+              releaseYear: movie.releaseYear,
+              image: movie.image,
+              description: movie.description,
+              genre: {
+                name: movie.genre.name,
+                description: movie.genre.description,
+              },
+              director: {
+                name: movie.director.name,
+                bio: movie.director.bio,
+              },
+              actors: movie.actors,
+              featured: movie.featured,
+            };
+          });
+
           setMovies(moviesFromApi);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching movies:", error);
-          setLoading(false);
         });
-    } else {
-      setLoading(false);
-    }
-  });
+          };
+        }, [token]);
   
   if (!user) {
     return (
@@ -68,10 +57,6 @@ export const MainView = () => {
         <SignupView />
       </>
     );
-  }
-
-  if (loading) {
-    return <div>Loading...</div>;
   }
 
   if (selectedMovie) {
