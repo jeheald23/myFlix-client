@@ -6,6 +6,10 @@ export const MovieView = ({ movie, onBackClick }) => {
           <img src={movie.image} />
         </div>
         <div>
+          <span>ID: </span>
+          <span>{movie._id.$oid}</span>
+        </div>
+        <div>
           <span>Title: </span>
           <span>{movie.title}</span>
         </div>
