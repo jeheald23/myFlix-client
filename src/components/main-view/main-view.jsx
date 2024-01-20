@@ -13,7 +13,7 @@ export const MainView = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
-    if (!token) {
+    if (token) {
       fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/movies", {
         headers: { Authorization: `Bearer ${token}` }
       })
@@ -38,11 +38,15 @@ export const MainView = () => {
               featured: movie.featured,
             };
           });
-
+  
           setMovies(moviesFromApi);
+        })
+        .catch((error) => {
+          console.error("Error fetching movies:", error);
         });
-          };
-        }, [token]);
+    }
+  }, [token]);
+  
   
   if (!user) {
     return (
