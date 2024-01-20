@@ -14,7 +14,7 @@ export const MainView = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("Inside useEffect")
+    console.log("Inside useEffect");
     if (!user && token) {
       console.log("Fetching movies...");
       fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/movies", {
