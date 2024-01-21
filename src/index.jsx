@@ -5,10 +5,10 @@ import Container from "react-bootstrap/Container";
 import "./index.scss";
 
 const App = () => {
-  return(
-<Container>
-  <MainView />
-</Container>
+  return (
+    <Container>
+      <MainView />
+    </Container>
   );
 };
 

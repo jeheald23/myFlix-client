@@ -7,48 +7,47 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 export const MainView = () => {
-
-  const fetchMovies = useCallback(async () => {
-    try {
-      if (token) {
-        const response = await fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/movies", {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch movies: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        const moviesFromApi = data.map((movie) => ({
-          id: movie._id,
-          title: movie.title,
-          releaseYear: movie.releaseYear,
-          image: movie.image,
-          description: movie.description,
-          genre: {
-            name: movie.genre.name,
-            description: movie.genre.description,
-          },
-          director: {
-            name: movie.director.name,
-            bio: movie.director.bio,
-          },
-          actors: movie.actors,
-          featured: movie.featured,
-        }));
-
-        setMovies(moviesFromApi);
-      }
-    } catch (error) {
-      console.error("Error fetching movies:", error);
-    }
-  }, [token]);
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedToken = localStorage.getItem("token");
+  const [user, setUser] = useState(storedUser || null);
+  const [token, setToken] = useState(storedToken || null);
+  const [movies, setMovies] = useState([]);
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
-    fetchMovies();
-  }, [fetchMovies]);
+    if (token) {
+      fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/movies", {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const moviesFromApi = data.map((movie) => {
+            return {
+              id: movie._id,
+              title: movie.title,
+              releaseYear: movie.releaseYear,
+              image: movie.image,
+              description: movie.description,
+              genre: {
+                name: movie.genre.name,
+                description: movie.genre.description,
+              },
+              director: {
+                name: movie.director.name,
+                bio: movie.director.bio,
+              },
+              actors: movie.actors,
+              featured: movie.featured,
+            };
+          });
+
+          setMovies(moviesFromApi);
+        })
+        .catch((error) => {
+          console.error("Error fetching movies:", error);
+        });
+    }
+  }, [token]);
 
   return (
     <Row className="justify-content-md-center">
