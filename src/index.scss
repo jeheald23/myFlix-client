@@ -1,4 +1,6 @@
-#img {
-  width: 100px;
-  height: 100px;
-}
+$primary: #3f4e51;
+$body-bg: #66746c;
+$body-color: white;
+
+
+@import "~bootstrap/scss/bootstrap.scss";

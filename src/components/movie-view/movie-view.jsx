@@ -1,3 +1,4 @@
+import './movie-view.scss';
 
 export const MovieView = ({ movie, onBackClick }) => {
     return (
@@ -35,13 +36,13 @@ export const MovieView = ({ movie, onBackClick }) => {
         </div>
           <div>
             <span>Actors: </span>
-            <span>{movie.actors}</span>
+            <span>{movie.actors.join(', ')}</span>
           </div>
           <div>
           <span>Featured: </span>
           <span>{movie.featured}</span>
           </div>
-          <button onClick={onBackClick}>Back</button>
+          <button onClick={onBackClick} className="back-button">Back</button>
       </div>
         );
     };
