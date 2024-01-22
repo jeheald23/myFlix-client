@@ -1,3 +1,7 @@
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+
+import './movie-view.scss';
 
 import React, { useState } from "react";
 import PropTypes from "prop-types";
