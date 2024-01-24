@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useParams, Link } from "react-router-dom";
+import { MovieCard } from "../movie-card/movie-card";
 
 import './movie-view.scss';
 
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-
-import './movie-view.scss';
-
-export const MovieView = ({ movie, onBackClick }) => {
+export const MovieView = ({ movies }) => {
+  const { title } = useParams();
   const [showGenreDescription, setShowGenreDescription] = useState(false);
   const [showDirectorBio, setShowDirectorBio] = useState(false);
+
+  const movie = movies.find((m) => m.title === title);
+
+  const similarMoviesGenre = movies.filter((m) => m.genre.name === movie.genre.name && m.title !== movie.title);
+  const similarMoviesDirector = movies.filter((m) => m.director.name === movie.director.name && m.title !== movie.title);
 
   const toggleGenreDescription = () => {
     setShowGenreDescription(!showGenreDescription);
@@ -22,6 +25,9 @@ export const MovieView = ({ movie, onBackClick }) => {
 
   return (
     <div>
+      <div>
+        <h1>Movie Details</h1>
+      </div>
       <div>
         <img src={movie.image} alt={movie.title} className="w-100" />
       </div>
@@ -73,29 +79,57 @@ export const MovieView = ({ movie, onBackClick }) => {
         <span>Featured: </span>
         <span>{movie.featured.toString()}</span>
       </div>
-      <button onClick={onBackClick} className="back-button">
-        Back
-      </button>
+      <Link to={"/"}>
+        <button className="back-button">Back</button>
+      </Link>
+      <span className="button-spacing"></span>
+      <Link to={"/"}>
+        <button className="back-button">Add to Favorites</button>
+      </Link>
+      <span className="button-spacing"></span>
+      <Link to={"/"}>
+        <button className="back-button">Remove from Favorites</button>
+      </Link>
+
+      <div>
+        <h2>Similar Movies by Genre</h2>
+        <div className="similar-movies">
+          {similarMoviesGenre.map((similarMovie) => (
+            <MovieCard key={similarMovie.title} movie={similarMovie} />
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h2>Similar Movies by Director</h2>
+        <div className="similar-movies">
+          {similarMoviesDirector.map((similarMovie) => (
+            <MovieCard key={similarMovie.title} movie={similarMovie} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
 
 MovieView.propTypes = {
-  movie: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    releaseYear: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    genre: PropTypes.shape({
-      name: PropTypes.string.isRequired,
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      releaseYear: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
-    }),
-    director: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      bio: PropTypes.string.isRequired,
-    }),
-    featured: PropTypes.bool.isRequired,
-    actors: PropTypes.array.isRequired,
-  }).isRequired,
+      genre: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+      }),
+      director: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        bio: PropTypes.string.isRequired,
+      }),
+      featured: PropTypes.bool.isRequired,
+      actors: PropTypes.array.isRequired,
+    })
+  ).isRequired,
   onBackClick: PropTypes.func.isRequired,
 };
