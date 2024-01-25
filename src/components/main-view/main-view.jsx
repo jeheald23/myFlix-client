@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import { NavigationBar } from "../navigation-bar/navigation-bar.jsx";
+import { ProfileView } from "../profile-view/profile-view.jsx";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -15,13 +16,19 @@ export const MainView = () => {
   const [token, setToken] = useState(storedToken || null);
   const [movies, setMovies] = useState([]);
   const { title } = useParams();
+  const [loadingMovies, setLoadingMovies] = useState(true);
 
   useEffect(() => {
     if (token) {
       fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/movies", {
         headers: { Authorization: `Bearer ${token}` }
       })
-        .then((response) => response.json())
+        .then((response) => {
+        if (!response.ok){
+          throw new Error("Error fetching movies");
+        } 
+        return response.json();
+      })
         .then((data) => {
           const moviesFromApi = data.map((movie) => {
             return {
@@ -47,6 +54,9 @@ export const MainView = () => {
         })
         .catch((error) => {
           console.error("Error fetching movies:", error);
+        })
+        .finally(() => {
+          setLoadingMovies(false);
         });
     }
   }, [token]);
@@ -95,6 +105,7 @@ export const MainView = () => {
               </>
             }
           />
+          <Route path="/users/:Username" element={<ProfileView />} />
           <Route
             path="/movies/:title"
             element={

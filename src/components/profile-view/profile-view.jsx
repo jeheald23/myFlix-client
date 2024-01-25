@@ -7,9 +7,9 @@ export const ProfileView = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  let favoriteMovies = movies.filter(m => user.FavoriteMovies.includes(m.title))
-
   useEffect(() => {
+    console.log('useEffect in ProfileView is running');
+  console.log('Username:', Username);
     const fetchUserData = async () => {
       try {
         const response = await fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${Username}`);
@@ -25,6 +25,9 @@ export const ProfileView = () => {
     fetchUserData();
   }, [Username]);
 
+  // Use userData.favoriteMovies directly for favoriteMovies
+  let favoriteMovies = userData?.favoriteMovies || [];
+
   return (
     <div>
       {loading ? (
@@ -39,7 +42,7 @@ export const ProfileView = () => {
           <div>
             <h2>My Favorite Movies</h2>
             <div className="favorite-movies">
-              {userData.favoriteMovies.map((favoriteMovie) => (
+              {favoriteMovies.map((favoriteMovie) => (
                 <MovieCard key={favoriteMovie.title} movie={favoriteMovie} />
               ))}
             </div>
@@ -48,6 +51,9 @@ export const ProfileView = () => {
       ) : (
         <p>Error loading user data</p>
       )}
+      <div>
+        <p>Profile View for {Username}</p>
+      </div>
     </div>
   );
 };
