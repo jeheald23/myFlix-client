@@ -105,7 +105,9 @@ export const MainView = () => {
               </>
             }
           />
+          <>
           <Route path="/users/:Username" element={<ProfileView />} />
+          </>
           <Route
             path="/movies/:title"
             element={

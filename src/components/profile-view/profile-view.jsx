@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import MovieCard from './MovieCard';
+import MovieCard from '../movie-card/movie-card';
 
 export const ProfileView = () => {
   const { Username } = useParams();
@@ -52,7 +52,11 @@ export const ProfileView = () => {
         <p>Error loading user data</p>
       )}
       <div>
-        <p>Profile View for {Username}</p>
+        <h1>{Username}'s Profile</h1>
+        <h2>My Details</h2>
+        <h2>Update or Delete My Profile</h2>
+        <h2>My Favorite Movies</h2> 
+
       </div>
     </div>
   );
