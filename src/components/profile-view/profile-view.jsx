@@ -7,6 +7,8 @@ export const ProfileView = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  let favoriteMovies = movies.filter(m => user.FavoriteMovies.includes(m.title))
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
