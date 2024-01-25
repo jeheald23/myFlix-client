@@ -8,8 +8,6 @@ export const ProfileView = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('useEffect in ProfileView is running');
-  console.log('Username:', Username);
     const fetchUserData = async () => {
       try {
         const response = await fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${Username}`);
@@ -55,6 +53,14 @@ export const ProfileView = () => {
         <h1>{Username}'s Profile</h1>
         <h2>My Details</h2>
         <h2>Update or Delete My Profile</h2>
+       
+        <button className="back-button">Update</button>
+      
+      <span className="button-spacing"></span>
+      
+        <button className="back-button">Delete</button>
+      
+    
         <h2>My Favorite Movies</h2> 
 
       </div>
