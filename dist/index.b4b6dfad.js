@@ -41954,6 +41954,7 @@ var _s = $RefreshSig$();
 const ProfileView = ({ user, onBackClick })=>{
     _s();
     const [loadingUserData, setLoadingUserData] = (0, _react.useState)(true);
+    const [userData, setUserData] = (0, _react.useState)(null); // Define userData state
     const { Username } = (0, _reactRouterDom.useParams)();
     (0, _react.useEffect)(()=>{
         fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${Username}`).then((response)=>{
@@ -41976,7 +41977,15 @@ const ProfileView = ({ user, onBackClick })=>{
     }, [
         Username
     ]);
-    let favoriteMovies = movies.filter((m)=>user.FavoriteMovies.includes(m._id));
+    // Check if userData is null to avoid errors
+    if (!userData) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        children: "Loading..."
+    }, void 0, false, {
+        fileName: "src/components/profile-view/profile-view.jsx",
+        lineNumber: 40,
+        columnNumber: 27
+    }, undefined);
+    // Render user details
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -41984,13 +41993,13 @@ const ProfileView = ({ user, onBackClick })=>{
                     children: "My Details"
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 44,
-                    columnNumber: 25
+                    lineNumber: 46,
+                    columnNumber: 17
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 43,
-                columnNumber: 21
+                lineNumber: 45,
+                columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 children: [
@@ -41998,21 +42007,21 @@ const ProfileView = ({ user, onBackClick })=>{
                         children: "Username: "
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 48,
-                        columnNumber: 25
+                        lineNumber: 50,
+                        columnNumber: 17
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: user.Username
+                        children: userData.username
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 49,
-                        columnNumber: 25
+                        lineNumber: 51,
+                        columnNumber: 17
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 47,
-                columnNumber: 21
+                lineNumber: 49,
+                columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 children: [
@@ -42020,21 +42029,21 @@ const ProfileView = ({ user, onBackClick })=>{
                         children: "Password: "
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 52,
-                        columnNumber: 25
+                        lineNumber: 54,
+                        columnNumber: 17
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: user.Password
+                        children: userData.password
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 53,
-                        columnNumber: 25
+                        lineNumber: 55,
+                        columnNumber: 17
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 51,
-                columnNumber: 21
+                lineNumber: 53,
+                columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 children: [
@@ -42042,21 +42051,21 @@ const ProfileView = ({ user, onBackClick })=>{
                         children: "Email: "
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 56,
-                        columnNumber: 25
+                        lineNumber: 58,
+                        columnNumber: 17
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: user.Email
+                        children: userData.email
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 57,
-                        columnNumber: 25
+                        lineNumber: 59,
+                        columnNumber: 17
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 55,
-                columnNumber: 21
+                lineNumber: 57,
+                columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 children: [
@@ -42064,21 +42073,21 @@ const ProfileView = ({ user, onBackClick })=>{
                         children: "Birthday: "
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 60,
-                        columnNumber: 25
+                        lineNumber: 62,
+                        columnNumber: 17
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: user.Birthday
+                        children: userData.birthday
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 61,
-                        columnNumber: 25
+                        lineNumber: 63,
+                        columnNumber: 17
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 59,
-                columnNumber: 21
+                lineNumber: 61,
+                columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 children: [
@@ -42086,30 +42095,30 @@ const ProfileView = ({ user, onBackClick })=>{
                         children: "Favorite Movies: "
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 64,
-                        columnNumber: 25
+                        lineNumber: 66,
+                        columnNumber: 17
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: user.FavoriteMovies
+                        children: userData.favoriteMovies.join(", ")
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 65,
-                        columnNumber: 25
+                        lineNumber: 67,
+                        columnNumber: 17
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 63,
-                columnNumber: 21
+                lineNumber: 65,
+                columnNumber: 13
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/profile-view/profile-view.jsx",
-        lineNumber: 42,
-        columnNumber: 17
+        lineNumber: 44,
+        columnNumber: 9
     }, undefined);
 };
-_s(ProfileView, "ScucARJtnXdiatEbw73ylOMbIJg=", false, function() {
+_s(ProfileView, "n7bjFM2hC7q4TPXZ1pcvWlMOGd4=", false, function() {
     return [
         (0, _reactRouterDom.useParams)
     ];
@@ -42120,7 +42129,7 @@ ProfileView.propTypes = {
         username: (0, _propTypesDefault.default).string.isRequired,
         password: (0, _propTypesDefault.default).string.isRequired,
         email: (0, _propTypesDefault.default).string.isRequired,
-        birthday: (0, _propTypesDefault.default).date.isRequired,
+        birthday: (0, _propTypesDefault.default).instanceOf(Date).isRequired,
         favoriteMovies: (0, _propTypesDefault.default).array.isRequired
     }).isRequired,
     onBackClick: (0, _propTypesDefault.default).func.isRequired
