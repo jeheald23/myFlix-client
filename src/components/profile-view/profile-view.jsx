@@ -1,83 +1,80 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router';
-import MovieCard from '../movie-card/movie-card';
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { useParams } from "react-router-dom"; 
+import { NavigationBar } from "../navigation-bar/navigation-bar.jsx";
+import { MovieCard } from "../movie-card/movie-card.jsx";
 
-export const ProfileView = ({ token }) => { // Assuming token is passed as a prop
-  const { Username } = useParams();
-  const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [favoriteMovies, setFavoriteMovies] = useState([]);
+export const ProfileView = ({ user, onBackClick }) => {
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${Username}`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        
-        if (!response.ok) {
-          throw new Error('Error fetching user data');
-        }
-  
-        const userData = await response.json();
-        setUserData(userData); // Assuming setUserData is a state setter function
-        const favoriteMovies = userData.FavoriteMovies || [];
-        setFavoriteMovies(favoriteMovies);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      } finally {
-        setLoading(false); // Assuming setLoading is a state setter function
-      }
-    };
-  
-    fetchUserData();
-  }, [Username, token]);
+    const [loadingUserData, setLoadingUserData] = useState(true);
+    const { Username } = useParams(); 
 
-  return (
-    <div>
-      <h1>{Username}'s Profile</h1>
+    useEffect(() => {
+        fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${Username}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Error fetching user data");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                const userDataFromApi = {
+                    username: data.Username, 
+                    password: data.Password, 
+                    email: data.Email, 
+                    birthday: data.Birthday, 
+                    favoriteMovies: data.FavoriteMovies 
+                };
 
-      {loading ? (
-        <p>Loading...</p>
-      ) : userData ? (
-        <div>
-          <h2>My Details</h2>
-          <p>Username: {userData.Username}</p>
-          <p>Password: {userData.Password}</p>
-          <p>Email: {userData.Email}</p>
-          <p>Birthday: {userData.Birthday}</p>
+                setUserData(userDataFromApi); 
+            })
+            .catch((error) => {
+                console.error("Error fetching user data:", error);
+            })
+            .finally(() => {
+                setLoadingUserData(false);
+            });
+    }, [Username]); 
 
-          <div>
-            <h2>My Favorite Movies</h2>
-            <div className="favorite-movies">
-              {favoriteMovies && favoriteMovies.length > 0 ? (
-                favoriteMovies.map((favoriteMovie) => (
-                  <MovieCard key={favoriteMovie.title} movie={favoriteMovie} />
-                ))
-              ) : (
-                <p>No favorite movies found.</p>
-              )}
-            </div>
-          </div>
+    let favoriteMovies = movies.filter(m => user.FavoriteMovies.includes(m._id))
 
-          <h2>Update or Delete My Profile</h2>
-          <div>
-            <button className="back-button">Update</button>
-            <span className="button-spacing"></span>
-            <button className="back-button">Delete</button>
-          </div>
-        </div>
-      ) : (
-        <p>Error loading user data</p>
-      )}
-    </div>
-  );
+    return (
+                <div>
+                    <div>
+                        <h1>My Details</h1>
+                    </div>
+
+                    <div>
+                        <span>Username: </span>
+                        <span>{user.Username}</span> 
+                    </div>
+                    <div>
+                        <span>Password: </span>
+                        <span>{user.Password}</span> 
+                    </div>
+                    <div>
+                        <span>Email: </span>
+                        <span>{user.Email}</span> 
+                    </div>
+                    <div>
+                        <span>Birthday: </span>
+                        <span>{user.Birthday}</span> 
+                    </div>
+                    <div>
+                        <span>Favorite Movies: </span>
+                        <span>{user.FavoriteMovies}</span> 
+                    </div>
+                </div>
+            );
+        };
+
+ProfileView.propTypes = {
+    user: PropTypes.shape({
+        username: PropTypes.string.isRequired,
+        password: PropTypes.string.isRequired, 
+        email: PropTypes.string.isRequired,
+        birthday: PropTypes.date.isRequired,
+        favoriteMovies: PropTypes.array.isRequired,
+    }).isRequired,
+    onBackClick: PropTypes.func.isRequired,
 };
-
-
-
-
-
-

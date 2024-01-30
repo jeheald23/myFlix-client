@@ -1,8 +1,17 @@
 import React from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 
 export const NavigationBar = ({ user, onLoggedOut }) => {
+  const navigate = useNavigate(); // Initialize useNavigate hook
+
+  const handleLogout = () => {
+    // Call onLoggedOut function passed from MainView
+    onLoggedOut();
+    // Redirect to login page after logout
+    navigate('/login');
+  };
+
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -30,7 +39,7 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                 <Nav.Link as={Link} to={`/users/${user.Username}`}>
                   Profile
                 </Nav.Link>
-                <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>
+                <Nav.Link onClick={handleLogout}>Logout</Nav.Link> {/* Call handleLogout on click */}
               </>
             )}
           </Nav>
@@ -39,3 +48,4 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
     </Navbar>
   );
 };
+

@@ -82,15 +82,7 @@ export const MovieView = ({ movies }) => {
       <Link to={"/"}>
         <button className="back-button">Back</button>
       </Link>
-      <span className="button-spacing"></span>
-      <Link to={"/"}>
-        <button className="back-button">Add to Favorites</button>
-      </Link>
-      <span className="button-spacing"></span>
-      <Link to={"/"}>
-        <button className="back-button">Remove from Favorites</button>
-      </Link>
-
+      
       <div>
         <h2>Similar Movies by Genre</h2>
         <div className="similar-movies">
