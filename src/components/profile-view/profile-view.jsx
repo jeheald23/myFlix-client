@@ -4,37 +4,42 @@ import { useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { MovieCard } from "../movie-card/movie-card";
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { useParams } from "react-router-dom";
 
-export const ProfileView = ({ user, onBackClick }) => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
-    const [birthday, setBirthday] = useState("");
+export const ProfileView = () => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedToken = localStorage.getItem("token");
     const [userData, setUserData] = useState(null);
     const { Username } = useParams();
 
     useEffect(() => {
-        fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${Username}`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Error fetching user data");
-                }
-                return response.json();
+        if (storedToken) {
+            fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${Username}`, {
+                headers: { Authorization: `Bearer ${storedToken}` }
             })
-            .then((data) => {
-                const userDataFromApi = {
-                    username: data.Username,
-                    password: data.Password,
-                    email: data.Email,
-                    birthday: data.Birthday,
-                    favoriteMovies: data.FavoriteMovies,
-                };
-                setUserData(userDataFromApi);
-            })
-            .catch((error) => {
-                console.error("Error fetching user data:", error);
-            });
-    }, [Username]);
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Error fetching user data");
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    const userDataFromApi = {
+                        username: data.Username,
+                        password: data.Password,
+                        email: data.Email,
+                        birthday: data.Birthday,
+                        favoriteMovies: data.FavoriteMovies,
+                    };
+                    setUserData(userDataFromApi);
+                })
+                .catch((error) => {
+                    console.error("Error fetching user data:", error);
+                });
+        }
+    }, [storedToken, Username]);
 
     const handleUpdate = (event) => {
         event.preventDefault();
