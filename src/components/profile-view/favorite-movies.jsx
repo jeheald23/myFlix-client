@@ -35,10 +35,10 @@ useEffect(() => {
 
     return (
       <div>
-        <Button variant="primary" type="add">
+        <Button variant="primary" type="submit" onClick="addFavorite">
           Add to Favorites
         </Button>
-        <Button variant="primary" type="remove">
+        <Button variant="primary" type="submit" onClick="removeFavorite">
           Remove from Favorites
         </Button>
       </div>
