@@ -6,10 +6,13 @@ import Form from "react-bootstrap/Form";
 import { MovieCard } from "../movie-card/movie-card";
 
 export const ProfileView = ({ user, onBackClick }) => {
-    const [userData, setUserData] = useState(null); // Define userData state
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [birthday, setBirthday] = useState("");
+    const [userData, setUserData] = useState(null);
     const { Username } = useParams();
 
-    //get user data from API
     useEffect(() => {
         fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${Username}`)
             .then((response) => {
@@ -26,16 +29,12 @@ export const ProfileView = ({ user, onBackClick }) => {
                     birthday: data.Birthday,
                     favoriteMovies: data.FavoriteMovies,
                 };
-
                 setUserData(userDataFromApi);
             })
             .catch((error) => {
                 console.error("Error fetching user data:", error);
             });
     }, [Username]);
-
-    // Check if userData is null to avoid errors
-    if (!userData) return <div>Loading...</div>;
 
     const handleUpdate = (event) => {
         event.preventDefault();
@@ -66,22 +65,14 @@ export const ProfileView = ({ user, onBackClick }) => {
     const handleDelete = (event) => {
         event.preventDefault();
 
-        const data = {
-            Username: username,
-            Password: password,
-            Email: email,
-            Birthday: birthday
-        };
-
         fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${username}`, {
             method: "DELETE",
-            body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json"
             }
         }).then((response) => {
             if (response.ok) {
-                alert("Profile delete successfully");
+                alert("Profile deleted successfully");
                 window.location.reload();
             } else {
                 alert("Unable to delete profile");
@@ -89,7 +80,8 @@ export const ProfileView = ({ user, onBackClick }) => {
         });
     };
 
-    // Render user details
+    if (!userData) return <div>Loading...</div>;
+
     return (
         <div>
             <div>
@@ -160,10 +152,10 @@ export const ProfileView = ({ user, onBackClick }) => {
                         />
                     </Form.Group>
 
-                    <Button variant="primary" type="update">
+                    <Button variant="primary" type="submit" onClick={handleUpdate}>
                         Update Profile
                     </Button>
-                    <Button variant="primary" type="delete">
+                    <Button variant="danger" type="submit" onClick={handleDelete}>
                         Delete Profile
                     </Button>
                 </Form>
