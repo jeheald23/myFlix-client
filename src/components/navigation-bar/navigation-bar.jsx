@@ -2,6 +2,8 @@ import React from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 
+import PropTypes from "prop-types"; // Import PropTypes
+
 export const NavigationBar = ({ user, onLoggedOut }) => {
   const navigate = useNavigate(); // Initialize useNavigate hook
 
@@ -47,5 +49,11 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
       </Container>
     </Navbar>
   );
+};
+
+// Add prop type validation
+NavigationBar.propTypes = {
+  user: PropTypes.object.isRequired,
+  onLoggedOut: PropTypes.func.isRequired,
 };
 

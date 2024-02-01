@@ -1,22 +1,24 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { MovieCard } from "../movie-card/movie-card";
-import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { useParams } from "react-router-dom";
 
 export const ProfileView = () => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const storedToken = localStorage.getItem("token");
     const [userData, setUserData] = useState(null);
-    const { Username } = useParams();
+    const [username, setUsername] = useState(storedUser.Username);
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState(storedUser.Email);
+    const [birthday, setBirthday] = useState(storedUser.Birthday);
+    const [favoriteMovies, setFavoriteMovies] = useState([]);
 
     useEffect(() => {
         if (storedToken) {
-            fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${Username}`, {
+            fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${storedUser.Username}`, {
                 headers: { Authorization: `Bearer ${storedToken}` }
             })
                 .then((response) => {
@@ -39,7 +41,7 @@ export const ProfileView = () => {
                     console.error("Error fetching user data:", error);
                 });
         }
-    }, [storedToken, Username]);
+    }, [storedToken, storedUser]);
 
     const handleUpdate = (event) => {
         event.preventDefault();
@@ -51,10 +53,11 @@ export const ProfileView = () => {
             Birthday: birthday
         };
 
-        fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${username}`, {
-            method: "POST",
+        fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${storedUser.Username}`, {
+            method: "PUT",
             body: JSON.stringify(data),
             headers: {
+                "Authorization": `Bearer ${storedToken}`,
                 "Content-Type": "application/json"
             }
         }).then((response) => {
@@ -70,15 +73,18 @@ export const ProfileView = () => {
     const handleDelete = (event) => {
         event.preventDefault();
 
-        fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${username}`, {
+        fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${storedUser.Username}`, {
             method: "DELETE",
             headers: {
+                "Authorization": `Bearer ${storedToken}`,
                 "Content-Type": "application/json"
             }
         }).then((response) => {
             if (response.ok) {
                 alert("Profile deleted successfully");
-                window.location.reload();
+                localStorage.removeItem("user");
+                localStorage.removeItem("token");
+                window.location.href="/login";
             } else {
                 alert("Unable to delete profile");
             }
@@ -87,12 +93,13 @@ export const ProfileView = () => {
 
     if (!userData) return <div>Loading...</div>;
 
+
     return (
         <div>
             <div>
-                <h1>My Details</h1>
+                <h1>{`${storedUser.Username}'s Profile`}</h1>
             </div>
-
+            <div><h2>My Details</h2></div>
             <div>
                 <span>Username: </span>
                 <span>{userData.username}</span>
@@ -109,12 +116,16 @@ export const ProfileView = () => {
                 <span>Birthday: </span>
                 <span>{userData.birthday}</span>
             </div>
-            <div>
-                <span>Favorite Movies: </span>
-                <span>{userData.favoriteMovies.join(", ")}</span>
-            </div>
+            
+            <div><h2>My Favorite Movies</h2></div>
+            <div className="favorite-movies">
+          {favoriteMovies.map((FavoriteMovie) => (
+            <MovieCard key={FavoriteMovie.title} movie={FavoriteMovie} />
+          ))}
+        </div>
 
             <div>
+                <div><h2>Update or Delete My Profile</h2></div>
                 <Form onSubmit={handleUpdate}>
                     <Form.Group controlId="formUsername">
                         <Form.Label>Username:</Form.Label>
@@ -172,7 +183,7 @@ export const ProfileView = () => {
 ProfileView.propTypes = {
     user: PropTypes.shape({
         username: PropTypes.string.isRequired,
-        password: PropTypes.string.isRequired,
+        password: PropTypes.string,
         email: PropTypes.string.isRequired,
         birthday: PropTypes.instanceOf(Date).isRequired,
         favoriteMovies: PropTypes.array.isRequired,

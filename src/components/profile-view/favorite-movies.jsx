@@ -1,4 +1,5 @@
-useEffect(() => {
+/*
+'useEffect(() => {
       fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${Username}/movies/${MovieID}`, {
         method: "PUT",
         body: JSON.stringify(data),
@@ -31,8 +32,9 @@ useEffect(() => {
         }
       });
     });
+*/
 
-
+/*
     return (
       <div>
         <Button variant="primary" type="submit" onClick="addFavorite">
@@ -43,3 +45,4 @@ useEffect(() => {
         </Button>
       </div>
     );
+*/
