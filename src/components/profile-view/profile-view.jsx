@@ -36,6 +36,7 @@ export const ProfileView = () => {
                         favoriteMovies: data.FavoriteMovies,
                     };
                     setUserData(userDataFromApi);
+                    setFavoriteMovies(userDataFromApi.favoriteMovies);
                 })
                 .catch((error) => {
                     console.error("Error fetching user data:", error);

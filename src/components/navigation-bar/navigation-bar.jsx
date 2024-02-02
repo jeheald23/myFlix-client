@@ -8,7 +8,8 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
   const navigate = useNavigate(); // Initialize useNavigate hook
 
   const handleLogout = () => {
-    // Call onLoggedOut function passed from MainView
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     onLoggedOut();
     // Redirect to login page after logout
     navigate('/login');
