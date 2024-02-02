@@ -84,7 +84,7 @@ export const ProfileView = () => {
                 alert("Profile deleted successfully");
                 localStorage.removeItem("user");
                 localStorage.removeItem("token");
-                window.location.href="/login";
+                window.location.reload();
             } else {
                 alert("Unable to delete profile");
             }
