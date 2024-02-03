@@ -20,7 +20,7 @@ export const MovieCard = ({ movie, token, setUser, user }) => {
         
 
       const addFavoriteMovie = () => { 
-        fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${user.Username}/movies/${movie.movieID}`, {
+        fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${Username}/movies/${movie.movieID}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export const MovieCard = ({ movie, token, setUser, user }) => {
       };
 
       const removeFavoriteMovie = () => {
-        fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${user.Username}/movies/${movie.movieID}`, {
+        fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${Username}/movies/${movie.movieID}`, {
           method: "DELETE",
           headers: {
             "Authorization": `Bearer ${token}`,
