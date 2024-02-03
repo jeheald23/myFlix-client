@@ -3,8 +3,12 @@ import PropTypes from "prop-types";
 import { useParams, Link } from "react-router-dom";
 import { MovieCard } from "../movie-card/movie-card";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import { useEffect } from "react";
 
 import './movie-view.scss';
+import { Col } from "react-bootstrap";
 
 export const MovieView = ({ movies }) => {
   const { title } = useParams();
@@ -24,43 +28,7 @@ export const MovieView = ({ movies }) => {
     setShowDirectorBio(!showDirectorBio);
   };
 
-  const addFavorite = () => {
-    useEffect(() => {
-      fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${Username}/movies/${MovieID}`, {
-        method: "PUT",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }).then((response) => {
-        if (response.ok) {
-          alert("Movie added to favorites");
-          window.location.reload();
-        } else {
-          alert("Movie not added to favorites");
-        }
-      });
-    });
-  };
-
-  const removeFavorite = () => {
-    useEffect(() => {
-      fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${Username}/movies/${MovieID}`, {
-        method: "DELETE",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }).then((response) => {
-        if (response.ok) {
-          alert("Movie removed from favorites");
-          window.location.reload();
-        } else {
-          alert("Movie not removed from favorites");
-        }
-      });
-    });
-  };
+  
 
   return (
     <div>
@@ -88,10 +56,7 @@ export const MovieView = ({ movies }) => {
       </div>
       <div>
         <span>Genre Description: </span>
-        <span
-          className="toggle-text"
-          onClick={toggleGenreDescription}
-        >
+        <span className="toggle-text" onClick={toggleGenreDescription}>
           {showGenreDescription ? "(Hide) " : "(Show) "}
         </span>
         {showGenreDescription && <span>{movie.genre.description}</span>}
@@ -102,51 +67,49 @@ export const MovieView = ({ movies }) => {
       </div>
       <div>
         <span>Director Bio: </span>
-        <span
-          className="toggle-text"
-          onClick={toggleDirectorBio}
-        >
+        <span className="toggle-text" onClick={toggleDirectorBio}>
           {showDirectorBio ? "(Hide) " : "(Show) "}
         </span>
         {showDirectorBio && <span>{movie.director.bio}</span>}
       </div>
       <div>
         <span>Actors: </span>
-        <span>{movie.actors.join(', ')}</span>
+        <span>{movie.actors.join(", ")}</span>
       </div>
       <div>
         <span>Featured: </span>
         <span>{movie.featured.toString()}</span>
       </div>
-      <Link to={"/"}>
-        <button className="back-button">Back</button>
-      </Link>
-      <div>
+     
+   {/*   <div>
         <Button variant="primary" type="submit" onClick={addFavorite}>
           Add to Favorites
         </Button>
         <Button variant="primary" type="submit" onClick={removeFavorite}>
           Remove from Favorites
         </Button>
-      </div>
-      
+      </div> */}
+
       <div>
-        <h2>Similar Movies by Genre</h2>
-        <div className="similar-movies">
+        <h2>{`More movies in the ${movie.genre.name} genre`}</h2>
+        <Row className="mb-4" md={3}>
           {similarMoviesGenre.map((similarMovie) => (
             <MovieCard key={similarMovie.title} movie={similarMovie} />
           ))}
-        </div>
+        </Row>
       </div>
 
       <div>
-        <h2>Similar Movies by Director</h2>
-        <div className="similar-movies">
+        <h2>{`More movies directed by ${movie.director.name}`}</h2>
+        <Row className="mb-4" md={3}>
           {similarMoviesDirector.map((similarMovie) => (
             <MovieCard key={similarMovie.title} movie={similarMovie} />
           ))}
-        </div>
+        </Row>
       </div>
+      <Link to={"/"}>
+        <button className="back-button">Back</button>
+      </Link>
     </div>
   );
 };

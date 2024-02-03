@@ -6,15 +6,16 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { MovieCard } from "../movie-card/movie-card";
 
-export const ProfileView = () => {
+export const ProfileView = ({user}) => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const storedToken = localStorage.getItem("token");
     const [userData, setUserData] = useState(null);
-    const [username, setUsername] = useState(storedUser.Username);
+    const [username, setUsername] = useState(storedUser ? storedUser.Username: '');
     const [password, setPassword] = useState("");
-    const [email, setEmail] = useState(storedUser.Email);
-    const [birthday, setBirthday] = useState(storedUser.Birthday);
-    const [favoriteMovies, setFavoriteMovies] = useState([]);
+    const [email, setEmail] = useState(storedUser ? storedUser.Email: '');
+    const [birthday, setBirthday] = useState(storedUser ? storedUser.Birthday: '');
+
+    const favoriteMovies = user.favoriteMovies ? movies.filter((movie) => user.favoriteMovies.includes(movie._id)) : [];
 
     useEffect(() => {
         if (storedToken) {
@@ -36,7 +37,7 @@ export const ProfileView = () => {
                         favoriteMovies: data.FavoriteMovies,
                     };
                     setUserData(userDataFromApi);
-                    setFavoriteMovies(userDataFromApi.favoriteMovies);
+                    favoriteMovies(userDataFromApi.favoriteMovies);
                 })
                 .catch((error) => {
                     console.error("Error fetching user data:", error);
@@ -63,11 +64,21 @@ export const ProfileView = () => {
             }
         }).then((response) => {
             if (response.ok) {
-                alert("Update successful");
-                window.location.reload();
+                return response.json(); // Parse JSON response
             } else {
-                alert("Update failed");
+                throw new Error('Update failed');
             }
+        })
+        .then((updatedUser) => {
+            if (updatedUser) {
+                localStorage.setItem('user', JSON.stringify(updatedUser));
+                setUserData(updatedUser);
+                alert('Update successful');
+            }
+        })
+        .catch((error) => {
+            console.error('Error updating profile:', error);
+            alert('Update failed');
         });
     };
 
@@ -85,7 +96,7 @@ export const ProfileView = () => {
                 alert("Profile deleted successfully");
                 localStorage.removeItem("user");
                 localStorage.removeItem("token");
-                window.location.reload();
+                window.location.href="/login";
             } else {
                 alert("Unable to delete profile");
             }
@@ -120,10 +131,10 @@ export const ProfileView = () => {
             
             <div><h2>My Favorite Movies</h2></div>
             <div className="favorite-movies">
-          {favoriteMovies.map((FavoriteMovie) => (
-            <MovieCard key={FavoriteMovie.title} movie={FavoriteMovie} />
-          ))}
-        </div>
+                {favoriteMovies.map(() => {
+                    return <MovieCard key={movie._id} movie={movie} />;
+                })}
+            </div>
 
             <div>
                 <div><h2>Update or Delete My Profile</h2></div>

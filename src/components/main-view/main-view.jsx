@@ -21,7 +21,7 @@ export const MainView = () => {
 
   useEffect(() => {
     if (token) {
-      fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/movies#", {
+      fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/movies", {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then((response) => {
@@ -113,7 +113,7 @@ export const MainView = () => {
           <>
           <Route 
           path="/users/:Username" 
-          element={<ProfileView />} />
+          element={<ProfileView user={user} />} />
           </>
           <Route
             path="/movies/:title"
@@ -121,6 +121,8 @@ export const MainView = () => {
               <>
                 {!user ? (
                   <Navigate to="/login" replace />
+                ) : loadingMovies ? (
+                  <Col>Loading...</Col>
                 ) : movies.length === 0 ? (
                   <Col>The list is empty!</Col>
                 ) : (
@@ -138,7 +140,7 @@ export const MainView = () => {
                 {!user ? (
                   <Navigate to="/login" replace />
                 ) : loadingMovies ? (
-                  <Col>Loading</Col>
+                  <Col>Loading...</Col>
                 ) : movies.length === 0 ? (
                   <Col>The list is empty!</Col>
                 ) : (
