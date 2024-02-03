@@ -10,17 +10,17 @@ export const MovieCard = ({ movie, token, setUser, user }) => {
   const Username = user?.Username;
 
   useEffect(() => {
-    if (user?.favoriteMovies && user.favoriteMovies.includes(movie._id)) {
+    if (user?.favoriteMovies && user.favoriteMovies.includes(movie.movieID)) {
       setIsFavorite(true);
     } else {
       setIsFavorite(false);
     }
-  }, [user, movie._id]);
+  }, [user, movie.movieID]);
   
         
 
       const addFavoriteMovie = () => { 
-        fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${Username}/movies/${movie._id}`, {
+        fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${user.Username}/movies/${movie.movieID}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export const MovieCard = ({ movie, token, setUser, user }) => {
       };
 
       const removeFavoriteMovie = () => {
-        fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${Username}/movies/${movie._id}`, {
+        fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${user.Username}/movies/${movie.movieID}`, {
           method: "DELETE",
           headers: {
             "Authorization": `Bearer ${token}`,
@@ -96,7 +96,7 @@ export const MovieCard = ({ movie, token, setUser, user }) => {
 
     MovieCard.propTypes = {
       movie: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
+        movieID: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
         releaseYear: PropTypes.number.isRequired,
         image: PropTypes.string.isRequired,

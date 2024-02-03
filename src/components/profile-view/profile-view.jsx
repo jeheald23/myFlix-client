@@ -1,49 +1,44 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { MovieCard } from "../movie-card/movie-card";
 
-export const ProfileView = ({user}) => {
+export const ProfileView = ({ user }) => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const storedToken = localStorage.getItem("token");
     const [userData, setUserData] = useState(null);
-    const [username, setUsername] = useState(storedUser ? storedUser.Username: '');
+    const [username, setUsername] = useState(storedUser ? storedUser.Username : '');
     const [password, setPassword] = useState("");
-    const [email, setEmail] = useState(storedUser ? storedUser.Email: '');
-    const [birthday, setBirthday] = useState(storedUser ? storedUser.Birthday: '');
-
-    const favoriteMovies = user.favoriteMovies ? movies.filter((movie) => user.favoriteMovies.includes(movie._id)) : [];
+    const [email, setEmail] = useState(storedUser ? storedUser.Email : '');
+    const [birthday, setBirthday] = useState(storedUser ? storedUser.Birthday : '');
+    const [favoriteMovies, setFavoriteMovies] = useState([]);
 
     useEffect(() => {
         if (storedToken) {
-            fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${storedUser.Username}`, {
-                headers: { Authorization: `Bearer ${storedToken}` }
-            })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error("Error fetching user data");
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    const userDataFromApi = {
-                        username: data.Username,
-                        password: data.Password,
-                        email: data.Email,
-                        birthday: data.Birthday,
-                        favoriteMovies: data.FavoriteMovies,
-                    };
-                    setUserData(userDataFromApi);
-                    favoriteMovies(userDataFromApi.favoriteMovies);
-                })
-                .catch((error) => {
-                    console.error("Error fetching user data:", error);
-                });
+            fetchUserData();
         }
     }, [storedToken, storedUser]);
+
+    const fetchUserData = () => {
+        fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${storedUser.Username}`, {
+            headers: { Authorization: `Bearer ${storedToken}` }
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Error fetching user data");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            setUserData(data);
+            setFavoriteMovies(data.favoriteMovies || []);
+        })
+        .catch((error) => {
+            console.error("Error fetching user data:", error);
+        });
+    };
 
     const handleUpdate = (event) => {
         event.preventDefault();
@@ -70,11 +65,9 @@ export const ProfileView = ({user}) => {
             }
         })
         .then((updatedUser) => {
-            if (updatedUser) {
-                localStorage.setItem('user', JSON.stringify(updatedUser));
-                setUserData(updatedUser);
-                alert('Update successful');
-            }
+            localStorage.setItem('user', JSON.stringify(updatedUser));
+            setUserData(updatedUser);
+            alert('Update successful');
         })
         .catch((error) => {
             console.error('Error updating profile:', error);
@@ -105,85 +98,31 @@ export const ProfileView = ({user}) => {
 
     if (!userData) return <div>Loading...</div>;
 
-
     return (
         <div>
             <div>
                 <h1>{`${storedUser.Username}'s Profile`}</h1>
             </div>
-            <div><h2>My Details</h2></div>
+            {/* Display user details */}
+            {/* Display favorite movies */}
             <div>
-                <span>Username: </span>
-                <span>{userData.username}</span>
-            </div>
-            <div>
-                <span>Password: </span>
-                <span>{userData.password}</span>
-            </div>
-            <div>
-                <span>Email: </span>
-                <span>{userData.email}</span>
-            </div>
-            <div>
-                <span>Birthday: </span>
-                <span>{userData.birthday}</span>
-            </div>
-            
-            <div><h2>My Favorite Movies</h2></div>
-            <div className="favorite-movies">
-                {favoriteMovies.map(() => {
-                    return <MovieCard key={movie._id} movie={movie} />;
-                })}
+                <h2>My Favorite Movies</h2>
+                <div className="favorite-movies">
+                    {favoriteMovies.map((movie) => (
+                        <MovieCard key={movie.movieID} movie={movie} />
+                    ))}
+                </div>
             </div>
 
+            {/* Update and delete form */}
             <div>
-                <div><h2>Update or Delete My Profile</h2></div>
+                <h2>Update or Delete My Profile</h2>
                 <Form onSubmit={handleUpdate}>
-                    <Form.Group controlId="formUsername">
-                        <Form.Label>Username:</Form.Label>
-                        <Form.Control
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                            minLength="3"
-                        />
-                    </Form.Group>
-
-                    <Form.Group controlId="formPassword">
-                        <Form.Label>Password:</Form.Label>
-                        <Form.Control
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </Form.Group>
-
-                    <Form.Group controlId="formEmail">
-                        <Form.Label>Email:</Form.Label>
-                        <Form.Control
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </Form.Group>
-
-                    <Form.Group controlId="formBirthday">
-                        <Form.Label>Birthday:</Form.Label>
-                        <Form.Control
-                            type="date"
-                            value={birthday}
-                            onChange={(e) => setBirthday(e.target.value)}
-                            required
-                        />
-                    </Form.Group>
-
-                    <Button variant="primary" type="submit" onClick={handleUpdate}>
+                    {/* Form fields */}
+                    <Button variant="primary" type="submit">
                         Update Profile
                     </Button>
-                    <Button variant="danger" type="submit" onClick={handleDelete}>
+                    <Button variant="danger" onClick={handleDelete}>
                         Delete Profile
                     </Button>
                 </Form>
@@ -197,7 +136,7 @@ ProfileView.propTypes = {
         username: PropTypes.string.isRequired,
         password: PropTypes.string,
         email: PropTypes.string.isRequired,
-        birthday: PropTypes.instanceOf(Date).isRequired,
+        birthday: PropTypes.string.isRequired,
         favoriteMovies: PropTypes.array.isRequired,
     }).isRequired,
 };
