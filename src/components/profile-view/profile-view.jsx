@@ -6,9 +6,12 @@ import Form from "react-bootstrap/Form";
 import { MovieCard } from "../movie-card/movie-card";
 
 export const ProfileView = ({ user }) => {
+    if (!user) {
+        return <div>Loading...</div>;
+    }
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const storedToken = localStorage.getItem("token");
-    const [userData, setUserData] = useState(null);
+    const [userData, setUserData] = useState(user || null);
     const [username, setUsername] = useState(storedUser ? storedUser.Username : '');
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState(storedUser ? storedUser.Email : '');
@@ -109,7 +112,7 @@ export const ProfileView = ({ user }) => {
                 <h2>My Favorite Movies</h2>
                 <div className="favorite-movies">
                     {favoriteMovies.map((movie) => (
-                        <MovieCard key={movie.movieID} movie={movie} />
+                        <MovieCard key={movie._id} movie={movie} />
                     ))}
                 </div>
             </div>

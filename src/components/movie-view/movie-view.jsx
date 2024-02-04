@@ -2,15 +2,12 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useParams, Link } from "react-router-dom";
 import { MovieCard } from "../movie-card/movie-card";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { useEffect } from "react";
 
 import './movie-view.scss';
-import { Col } from "react-bootstrap";
 
 export const MovieView = ({ movies }) => {
+  
   const { title } = useParams();
   const [showGenreDescription, setShowGenreDescription] = useState(false);
   const [showDirectorBio, setShowDirectorBio] = useState(false);
@@ -80,15 +77,6 @@ export const MovieView = ({ movies }) => {
         <span>Featured: </span>
         <span>{movie.featured.toString()}</span>
       </div>
-     
-   {/*   <div>
-        <Button variant="primary" type="submit" onClick={addFavorite}>
-          Add to Favorites
-        </Button>
-        <Button variant="primary" type="submit" onClick={removeFavorite}>
-          Remove from Favorites
-        </Button>
-      </div> */}
 
       <div>
         <h2>{`More movies in the ${movie.genre.name} genre`}</h2>
@@ -117,6 +105,7 @@ export const MovieView = ({ movies }) => {
 MovieView.propTypes = {
   movies: PropTypes.arrayOf(
     PropTypes.shape({
+      _id: PropTypes.string,
       title: PropTypes.string.isRequired,
       releaseYear: PropTypes.number.isRequired,
       image: PropTypes.string.isRequired,
@@ -133,5 +122,5 @@ MovieView.propTypes = {
       actors: PropTypes.array.isRequired,
     })
   ).isRequired,
-  onBackClick: PropTypes.func.isRequired,
+  onBackClick: PropTypes.func
 };
