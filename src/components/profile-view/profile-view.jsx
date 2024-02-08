@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { MovieCard } from "../movie-card/movie-card";
 
 export const ProfileView = ({ user }) => {
-    if (!user) {
-        return <div>Loading...</div>;
-    }
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const storedToken = localStorage.getItem("token");
     const [userData, setUserData] = useState(user || null);
-    const [username, setUsername] = useState(storedUser ? storedUser.Username : '');
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState(storedUser ? storedUser.Email : '');
-    const [birthday, setBirthday] = useState(storedUser ? storedUser.Birthday : '');
+    const [Username, setUsername] = useState(storedUser ? storedUser.Username : '');
+    const [Password, setPassword] = useState("");
+    const [Email, setEmail] = useState(storedUser ? storedUser.Email : '');
+    const [Birthday, setBirthday] = useState(storedUser ? storedUser.Birthday : '');
     const [favoriteMovies, setFavoriteMovies] = useState([]);
 
     useEffect(() => {
-        if (storedToken) {
+        if (storedToken && !storedUser) {
             fetchUserData();
         }
     }, [storedToken, storedUser]);
@@ -47,10 +43,10 @@ export const ProfileView = ({ user }) => {
         event.preventDefault();
 
         const data = {
-            Username: username,
-            Password: password,
-            Email: email,
-            Birthday: birthday
+            Username: Username,
+            Password: Password,
+            Email: Email,
+            Birthday: Birthday
         };
 
         fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${storedUser.Username}`, {
@@ -99,32 +95,70 @@ export const ProfileView = ({ user }) => {
         });
     };
 
-    if (!userData) return <div>Loading...</div>;
-
     return (
         <div>
             <div>
                 <h1>{`${storedUser.Username}'s Profile`}</h1>
             </div>
-            {/* Display user details */}
-            {/* Display favorite movies */}
             <div>
-                <h2>My Favorite Movies</h2>
-                <div className="favorite-movies">
-                    {favoriteMovies.map((movie) => (
-                        <MovieCard key={movie._id} movie={movie} />
-                    ))}
-                </div>
+                <p>Username: {userData.Username}</p>
+                <p>Email: {userData.Email}</p>
+                <p>Birthday: {userData.Birthday}</p>
             </div>
-
-            {/* Update and delete form */}
+            <h2>My Favorite Movies</h2>
+            <div className="favorite-movies">
+                {favoriteMovies.map((movie) => (
+                    <MovieCard key={movie.id} movie={movie} />
+                ))}
+            </div>
             <div>
                 <h2>Update or Delete My Profile</h2>
                 <Form onSubmit={handleUpdate}>
-                    {/* Form fields */}
+                    <Form.Group controlId="formUsername">
+                        <Form.Label>Username:</Form.Label>
+                        <Form.Control
+                            type="text"
+                            value={Username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                            minLength="3"
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId="formPassword">
+                        <Form.Label>Password:</Form.Label>
+                        <Form.Control
+                            type="password"
+                            value={Password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId="formEmail">
+                        <Form.Label>Email:</Form.Label>
+                        <Form.Control
+                            type="email"
+                            value={Email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId="formBirthday">
+                        <Form.Label>Birthday:</Form.Label>
+                        <Form.Control
+                            type="date"
+                            value={Birthday}
+                            onChange={(e) => setBirthday(e.target.value)}
+                            required
+                        />
+                    </Form.Group>
+
                     <Button variant="primary" type="submit">
                         Update Profile
                     </Button>
+
                     <Button variant="danger" onClick={handleDelete}>
                         Delete Profile
                     </Button>
@@ -136,10 +170,11 @@ export const ProfileView = ({ user }) => {
 
 ProfileView.propTypes = {
     user: PropTypes.shape({
-        username: PropTypes.string.isRequired,
-        password: PropTypes.string,
-        email: PropTypes.string.isRequired,
-        birthday: PropTypes.string.isRequired,
-        favoriteMovies: PropTypes.array.isRequired,
+        Username: PropTypes.string.isRequired,
+        Password: PropTypes.string,
+        Email: PropTypes.string.isRequired,
+        Birthday: PropTypes.string.isRequired,
+        FavoriteMovies: PropTypes.array.isRequired,
     }).isRequired,
 };
+

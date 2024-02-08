@@ -54,7 +54,7 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
 
 // Add prop type validation
 NavigationBar.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.string.isRequired,
   onLoggedOut: PropTypes.func.isRequired,
 };
 

@@ -13,8 +13,8 @@ import { ProfileView } from "../profile-view/profile-view.jsx";
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
-  const [user, setUser] = useState(storedUser || null);
-  const [token, setToken] = useState(storedToken || null);
+  const [user, setUser] = useState(storedUser || "");
+  const [token, setToken] = useState(storedToken || "");
   const [movies, setMovies] = useState([]);
   const { title } = useParams();
   const [loadingMovies, setLoadingMovies] = useState(true);
@@ -147,8 +147,13 @@ export const MainView = () => {
                   <>
                     {title === undefined && <Col md={12}><h1>Browse All Movies</h1></Col>}
                     {movies.map((movie) => (
-                      <Col className="mb-4" key={movie.title} md={3}>
-                        <MovieCard movie={movie} />
+                      <Col className="mb-4" key={movie.id} md={3}>
+                        <MovieCard
+                            movie = {movie}
+                            token = {token}
+                            setUser={setUser}
+                            user={user}   
+                            />
                       </Col>
                     ))}
                   </>
