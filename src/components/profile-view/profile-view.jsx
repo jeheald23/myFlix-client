@@ -12,7 +12,6 @@ export const ProfileView = ({ user }) => {
     const [Password, setPassword] = useState("");
     const [Email, setEmail] = useState(storedUser ? storedUser.Email : '');
     const [Birthday, setBirthday] = useState(storedUser ? storedUser.Birthday : '');
-    const [favoriteMovies, setFavoriteMovies] = useState([]);
 
     useEffect(() => {
         if (storedToken && !storedUser) {
@@ -107,9 +106,9 @@ export const ProfileView = ({ user }) => {
             </div>
             <h2>My Favorite Movies</h2>
             <div className="favorite-movies">
-                {favoriteMovies.map((movie) => (
+               {/* {FavoriteMovies.map((movie) => (
                     <MovieCard key={movie.id} movie={movie} />
-                ))}
+               ))} */}
             </div>
             <div>
                 <h2>Update or Delete My Profile</h2>
