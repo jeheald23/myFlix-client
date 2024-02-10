@@ -5,14 +5,14 @@ import Form from "react-bootstrap/Form";
 import { MovieCard } from "../movie-card/movie-card";
 
 
-export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
+export const ProfileView = ({ user, storedUser, storedToken }) => {
     const [userData, setUserData] = useState(user || null);
     const [Username, setUsername] = useState(storedUser ? storedUser.Username : '');
     const [Password, setPassword] = useState("");
     const [Email, setEmail] = useState(storedUser ? storedUser.Email : '');
     const [Birthday, setBirthday] = useState(storedUser ? storedUser.Birthday : '');
-
-    const favoriteMovies = user.favoriteMovies ? movies.filter((movie) => user.favoriteMovies.includes(movie.id)) : [];
+    
+    const favoriteMovies = user?.FavoriteMovies || [];
 
     useEffect(() => {
         if (storedToken && !storedUser) {
@@ -107,7 +107,7 @@ export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
             </div>
             <h2>My Favorite Movies</h2>
             <div className="favorite-movies">
-            {FavoriteMovies.map((movie) => (
+            {favoriteMovies.map((movie) => (
                     <MovieCard key={movie.id} movie={movie} />
                ))}
             </div>
@@ -170,8 +170,7 @@ export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
 };
 
 ProfileView.propTypes = {
-        movies: PropTypes.array.isRequired,
-        FavoriteMovies: PropTypes.array,    
+        favoriteMovies: PropTypes.array,    
         storedUser: PropTypes.object,
         storedToken: PropTypes.string,
     user: PropTypes.shape({
