@@ -5,14 +5,14 @@ import Form from "react-bootstrap/Form";
 import { MovieCard } from "../movie-card/movie-card";
 
 
-export const ProfileView = ({ user, storedUser, storedToken }) => {
+export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
     const [userData, setUserData] = useState(user || null);
     const [Username, setUsername] = useState(storedUser ? storedUser.Username : '');
     const [Password, setPassword] = useState("");
     const [Email, setEmail] = useState(storedUser ? storedUser.Email : '');
     const [Birthday, setBirthday] = useState(storedUser ? storedUser.Birthday : '');
 
-    const FavoriteMovies = user.FavoriteMovies ? movies.filter((movie) => user.FavoriteMovies.includes(movie.id)) : [];
+    const favoriteMovies = user.favoriteMovies ? movies.filter((movie) => user.favoriteMovies.includes(movie.id)) : [];
 
     useEffect(() => {
         if (storedToken && !storedUser) {
@@ -170,6 +170,8 @@ export const ProfileView = ({ user, storedUser, storedToken }) => {
 };
 
 ProfileView.propTypes = {
+        movies: PropTypes.array.isRequired,
+        FavoriteMovies: PropTypes.array,    
         storedUser: PropTypes.object,
         storedToken: PropTypes.string,
     user: PropTypes.shape({

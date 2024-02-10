@@ -42086,14 +42086,14 @@ var _form = require("react-bootstrap/Form");
 var _formDefault = parcelHelpers.interopDefault(_form);
 var _movieCard = require("../movie-card/movie-card");
 var _s = $RefreshSig$();
-const ProfileView = ({ user, storedUser, storedToken })=>{
+const ProfileView = ({ user, storedUser, storedToken, movies })=>{
     _s();
     const [userData, setUserData] = (0, _react.useState)(user || null);
     const [Username, setUsername] = (0, _react.useState)(storedUser ? storedUser.Username : "");
     const [Password, setPassword] = (0, _react.useState)("");
     const [Email, setEmail] = (0, _react.useState)(storedUser ? storedUser.Email : "");
     const [Birthday, setBirthday] = (0, _react.useState)(storedUser ? storedUser.Birthday : "");
-    const FavoriteMovies = user.FavoriteMovies ? movies.filter((movie)=>user.FavoriteMovies.includes(movie.id)) : [];
+    const favoriteMovies = user.favoriteMovies ? movies.filter((movie)=>user.favoriteMovies.includes(movie.id)) : [];
     (0, _react.useEffect)(()=>{
         if (storedToken && !storedUser) fetchUserData();
     }, [
@@ -42390,6 +42390,8 @@ const ProfileView = ({ user, storedUser, storedToken })=>{
 _s(ProfileView, "Q48/agDqnPYneYx1fP9nt+gA+M8=");
 _c = ProfileView;
 ProfileView.propTypes = {
+    movies: (0, _propTypesDefault.default).array.isRequired,
+    FavoriteMovies: (0, _propTypesDefault.default).array,
     storedUser: (0, _propTypesDefault.default).object,
     storedToken: (0, _propTypesDefault.default).string,
     user: (0, _propTypesDefault.default).shape({
