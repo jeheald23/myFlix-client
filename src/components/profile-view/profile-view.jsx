@@ -4,14 +4,15 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { MovieCard } from "../movie-card/movie-card";
 
-export const ProfileView = ({ user }) => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    const storedToken = localStorage.getItem("token");
+
+export const ProfileView = ({ user, storedUser, storedToken }) => {
     const [userData, setUserData] = useState(user || null);
     const [Username, setUsername] = useState(storedUser ? storedUser.Username : '');
     const [Password, setPassword] = useState("");
     const [Email, setEmail] = useState(storedUser ? storedUser.Email : '');
     const [Birthday, setBirthday] = useState(storedUser ? storedUser.Birthday : '');
+
+    const FavoriteMovies = user.FavoriteMovies ? movies.filter((movie) => user.FavoriteMovies.includes(movie.id)) : [];
 
     useEffect(() => {
         if (storedToken && !storedUser) {
@@ -106,10 +107,11 @@ export const ProfileView = ({ user }) => {
             </div>
             <h2>My Favorite Movies</h2>
             <div className="favorite-movies">
-               {/* {FavoriteMovies.map((movie) => (
+            {FavoriteMovies.map((movie) => (
                     <MovieCard key={movie.id} movie={movie} />
-               ))} */}
+               ))}
             </div>
+            
             <div>
                 <h2>Update or Delete My Profile</h2>
                 <Form onSubmit={handleUpdate}>
@@ -168,6 +170,8 @@ export const ProfileView = ({ user }) => {
 };
 
 ProfileView.propTypes = {
+        storedUser: PropTypes.object,
+        storedToken: PropTypes.string,
     user: PropTypes.shape({
         Username: PropTypes.string.isRequired,
         Password: PropTypes.string,

@@ -163,6 +163,10 @@ export const MainView = () => {
           />
         </Routes>
       </Row>
+      <div>
+      <ProfileView storedUser={storedUser} storedToken={storedToken} />
+    </div>
     </BrowserRouter>
   );
 };
+
