@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { MovieCard } from "../movie-card/movie-card";
+import { propTypes } from "react-bootstrap/esm/Image";
 
 
 export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
@@ -12,7 +13,14 @@ export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
     const [Email, setEmail] = useState(storedUser ? storedUser.Email : '');
     const [Birthday, setBirthday] = useState(storedUser ? storedUser.Birthday : '');
     
-    const favoriteMovies = user.movies ? movies.filter((movie) => user.movies.includes(movie.id)) : [];
+    ProfileView.propTypes = {
+        user: PropTypes.object.isRequired,
+        storedUser: PropTypes.object,
+        storedToken: PropTypes.string,
+        movies: PropTypes.array.isRequired
+    };
+
+    let favoriteMovies = movies.filter(m => user.movies.includes(m.id))
 
     useEffect(() => {
         if (storedToken && !storedUser) {
@@ -180,6 +188,7 @@ export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
 };
 
 ProfileView.propTypes = {
+        filter: propTypes.func,
         favoriteMovies: PropTypes.array,    
         storedUser: PropTypes.object,
         storedToken: PropTypes.string,
@@ -189,6 +198,7 @@ ProfileView.propTypes = {
         Email: PropTypes.string.isRequired,
         Birthday: PropTypes.string.isRequired,
         FavoriteMovies: PropTypes.array.isRequired,
+        movies: PropTypes.array
     }).isRequired,
 };
 
