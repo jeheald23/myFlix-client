@@ -113,7 +113,7 @@ export const MainView = () => {
           <>
           <Route 
           path="/users/:Username" 
-          element={<ProfileView user={user} />} />
+          element={<ProfileView user={user} storedUser={storedUser} storedToken={storedToken} />} />
           </>
           <Route
             path="/movies/:title"
@@ -164,9 +164,9 @@ export const MainView = () => {
         </Routes>
       </Row>
       <div>
-      <ProfileView storedUser={storedUser} storedToken={storedToken} />
     </div>
     </BrowserRouter>
   );
 };
 
+export default MainView;

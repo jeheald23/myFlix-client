@@ -4,9 +4,8 @@ import PropTypes from "prop-types";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import { ProfileView } from "../profile-view/profile-view";
 
-export const MovieCard = ({ movie, token, setUser, user }) => {
+export const MovieCard = ({ movie, user, token }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const Username = user?.Username;
 
@@ -91,9 +90,6 @@ export const MovieCard = ({ movie, token, setUser, user }) => {
             ) : (
               <Button className="fav-btn" onClick={removeFavoriteMovie}>-</Button>
             )}
-          </div>
-          <div>
-            <ProfileView favoriteMovies = {user.favoriteMovies} />
           </div>
         </Card>
       );
