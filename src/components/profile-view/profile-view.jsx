@@ -5,14 +5,14 @@ import Form from "react-bootstrap/Form";
 import { MovieCard } from "../movie-card/movie-card";
 
 
-export const ProfileView = ({ user, storedUser, storedToken }) => {
+export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
     const [userData, setUserData] = useState(user || null);
     const [Username, setUsername] = useState(storedUser ? storedUser.Username : '');
     const [Password, setPassword] = useState("");
     const [Email, setEmail] = useState(storedUser ? storedUser.Email : '');
     const [Birthday, setBirthday] = useState(storedUser ? storedUser.Birthday : '');
     
-    const favoriteMovies = user?.FavoriteMovies || [];
+    const favoriteMovies = user.movies ? movies.filter((movie) => user.movies.includes(movie.id)) : [];
 
     useEffect(() => {
         if (storedToken && !storedUser) {
@@ -105,11 +105,21 @@ export const ProfileView = ({ user, storedUser, storedToken }) => {
                 <p>Email: {userData.Email}</p>
                 <p>Birthday: {userData.Birthday}</p>
             </div>
+            
             <h2>My Favorite Movies</h2>
             <div className="favorite-movies">
-            {favoriteMovies.map((movie) => (
-                    <MovieCard key={movie.id} movie={movie} />
-               ))}
+                {favoriteMovies.map((movie) => {
+                    return (
+                        <div key={movie.id}>
+                            <MovieCard
+                                movie={movie}
+                                token={token}
+                                setUser={setUser}
+                                user={user}
+                            />
+                        </div>
+                    );
+                })}
             </div>
             
             <div>

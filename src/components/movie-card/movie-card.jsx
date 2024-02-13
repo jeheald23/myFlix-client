@@ -5,7 +5,7 @@ import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
-export const MovieCard = ({ movie, user, token }) => {
+export const MovieCard = ({ movie, user, token, setUser }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const Username = user?.Username;
 
