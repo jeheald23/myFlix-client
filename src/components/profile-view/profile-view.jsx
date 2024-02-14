@@ -11,9 +11,13 @@ export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
     const [Password, setPassword] = useState("");
     const [Email, setEmail] = useState(storedUser ? storedUser.Email : '');
     const [Birthday, setBirthday] = useState(storedUser ? storedUser.Birthday : '');
-    
+    const [favoriteMovies, setFavoriteMovies] = useState([]);
 
-    const favoriteMovies = user.favoriteMovies ? user.favoriteMovies: [];
+    console.log(JSON.stringify(user));
+
+    useEffect(()=>{
+        fetchUserData();
+    }, []);
 
     useEffect(() => {
         if (storedToken && !storedUser) {
@@ -33,7 +37,8 @@ export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
         })
         .then((data) => {
             setUserData(data);
-            setFavoriteMovies(data.favoriteMovies || []);
+            setFavoriteMovies(movies.filter((movie) => data.FavoriteMovies.includes(movie.id)));
+            console.log(favoriteMovies);
         })
         .catch((error) => {
             console.error("Error fetching user data:", error);
@@ -195,4 +200,3 @@ user: PropTypes.shape({
     movies: PropTypes.array
 }).isRequired
 };
-

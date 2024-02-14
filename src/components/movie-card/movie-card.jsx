@@ -16,8 +16,6 @@ export const MovieCard = ({ movie, user, token, setUser }) => {
       setIsFavorite(false);
     }
   }, [user, movie.id]);
-  
-        
 
       const addFavoriteMovie = () => { 
         console.log(movie)
