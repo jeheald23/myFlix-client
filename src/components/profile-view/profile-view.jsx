@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { MovieCard } from "../movie-card/movie-card";
 import PropTypes from "prop-types";
+import { Col, Row } from "react-bootstrap";
 
 
 export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
@@ -106,6 +107,7 @@ export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
             <div>
                 <h1>{`${storedUser.Username}'s Profile`}</h1>
             </div>
+            <div><h2>My Details</h2></div>
             <div>
                 <p>Username: {userData.Username}</p>
                 <p>Email: {userData.Email}</p>
@@ -113,24 +115,28 @@ export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
             </div>
             
             <h2>My Favorite Movies</h2>
-            <div className="favorite-movies">
+            
+            
+            <Row>
                 {favoriteMovies.map((movie) => {
                     return (
-                        <div key={movie.id}>
+                        <Col className="mb-4" key={movie.id} md={3}>
                             <MovieCard
                                 movie={movie}
                                 storedToken={storedToken}
                                 storedUser={storedUser}
                                 user={user}
+                                setUser = {setUserData}
                             />
-                        </div>
+                        </Col>
                     );
                 })}
-            </div>
+            </Row>
             
             <div>
                 <h2>Update or Delete My Profile</h2>
                 <Form onSubmit={handleUpdate}>
+                <Col md={5}>
                     <Form.Group controlId="formUsername">
                         <Form.Label>Username:</Form.Label>
                         <Form.Control
@@ -179,6 +185,7 @@ export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
                     <Button variant="danger" onClick={handleDelete}>
                         Delete Profile
                     </Button>
+                    </Col>
                 </Form>
             </div>
         </div>

@@ -73,9 +73,13 @@ export const MovieCard = ({ movie, user, token, setUser }) => {
           });
       };
 
+      const handleClick = () => {
+        window.scrollTo(0, 0);
+      };
+
       return (
         <Card className="h-100">
-          <Link to={`/movies/${encodeURIComponent(movie.title)}`}>
+          <Link to={`/movies/${encodeURIComponent(movie.title)}`} onClick={handleClick}>
             <Card.Img variant="top" src={movie.image} />
           </Link>
           <Card.Body>

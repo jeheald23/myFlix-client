@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 
 import PropTypes from "prop-types"; // Import PropTypes
 
 export const NavigationBar = ({ user, onLoggedOut }) => {
+  const [navBarHeight, setNavBarHeight] = useState(0); // State to store the height
   const navigate = useNavigate(); // Initialize useNavigate hook
+  const navRef = useRef(null); // Create a ref for the navigation bar
+
+  useEffect(() => {
+    // Update the state with the height of the navigation bar
+    if (navRef.current) {
+      setNavBarHeight(navRef.current.offsetHeight);
+    }
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -16,7 +25,7 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
   };
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand="lg" ref={navRef}>
       <Container>
         <Navbar.Brand as={Link} to="/">
           MyFlix
@@ -54,7 +63,7 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
 
 // Add prop type validation
 NavigationBar.propTypes = {
-  user: PropTypes.string.isRequired,
+  user: PropTypes.string,
   onLoggedOut: PropTypes.func.isRequired,
 };
 

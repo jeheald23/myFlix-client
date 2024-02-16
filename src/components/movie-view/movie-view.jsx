@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { useParams, Link } from "react-router-dom";
 import { MovieCard } from "../movie-card/movie-card";
@@ -11,6 +11,7 @@ export const MovieView = ({ movies }) => {
   const { title } = useParams();
   const [showGenreDescription, setShowGenreDescription] = useState(false);
   const [showDirectorBio, setShowDirectorBio] = useState(false);
+  const movieRef = useRef(null);
 
   const movie = movies.find((m) => m.title === title);
 
@@ -25,11 +26,14 @@ export const MovieView = ({ movies }) => {
     setShowDirectorBio(!showDirectorBio);
   };
 
-  
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, [title]);
 
   return (
     <div>
-      <div>
+      <div ref={movieRef}>
         <h1>Movie Details</h1>
       </div>
       <div>
