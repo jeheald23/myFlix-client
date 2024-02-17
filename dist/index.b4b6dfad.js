@@ -6111,12 +6111,13 @@ var _reactRouterDom = require("react-router-dom");
 var _button = require("react-bootstrap/Button");
 var _buttonDefault = parcelHelpers.interopDefault(_button);
 var _s = $RefreshSig$();
-const MovieCard = ({ movie, user, token, setUser })=>{
+const MovieCard = ({ movie, user, token, setUser, visibilityToggle })=>{
     _s();
-    const [isFavorite, setIsFavorite] = (0, _react.useState)(false);
+    const [isFavorite, setIsFavorite] = (0, _react.useState)(user?.FavoriteMovies?.includes(movie.id) || false);
+    const [isVisible, setIsVisible] = (0, _react.useState)(true);
     const Username = user?.Username;
     (0, _react.useEffect)(()=>{
-        if (user?.favoriteMovies && user.favoriteMovies.includes(movie.id)) setIsFavorite(true);
+        if (user?.FavoriteMovies && user.FavoriteMovies.includes(movie.id)) setIsFavorite(true);
         else setIsFavorite(false);
     }, [
         user,
@@ -6147,7 +6148,7 @@ const MovieCard = ({ movie, user, token, setUser })=>{
         });
     };
     const removeFavoriteMovie = ()=>{
-        fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${storedUser.Username}/movies/${movie.id}`, {
+        fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${Username}/movies/${movie.id}`, {
             method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${token}`,
@@ -6161,6 +6162,7 @@ const MovieCard = ({ movie, user, token, setUser })=>{
             localStorage.setItem("user", JSON.stringify(updatedUser));
             setUser(updatedUser);
             setIsFavorite(false);
+            if (visibilityToggle) setIsVisible(false);
         }).catch((error)=>{
             console.error("Error removing favorite movie:", error);
             alert("Failed to remove favorite movie");
@@ -6169,7 +6171,7 @@ const MovieCard = ({ movie, user, token, setUser })=>{
     const handleClick = ()=>{
         window.scrollTo(0, 0);
     };
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card), {
+    return isVisible && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card), {
         className: "h-100",
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
@@ -6180,13 +6182,13 @@ const MovieCard = ({ movie, user, token, setUser })=>{
                     src: movie.image
                 }, void 0, false, {
                     fileName: "src/components/movie-card/movie-card.jsx",
-                    lineNumber: 83,
-                    columnNumber: 13
+                    lineNumber: 89,
+                    columnNumber: 15
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/movie-card/movie-card.jsx",
-                lineNumber: 82,
-                columnNumber: 11
+                lineNumber: 88,
+                columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Body, {
                 children: [
@@ -6194,21 +6196,21 @@ const MovieCard = ({ movie, user, token, setUser })=>{
                         children: movie.title
                     }, void 0, false, {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 86,
-                        columnNumber: 13
+                        lineNumber: 92,
+                        columnNumber: 15
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Text, {
                         children: movie.director.name
                     }, void 0, false, {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 87,
-                        columnNumber: 13
+                        lineNumber: 93,
+                        columnNumber: 15
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-card/movie-card.jsx",
-                lineNumber: 85,
-                columnNumber: 11
+                lineNumber: 91,
+                columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 className: "favorite-btns",
@@ -6218,30 +6220,30 @@ const MovieCard = ({ movie, user, token, setUser })=>{
                     children: "+"
                 }, void 0, false, {
                     fileName: "src/components/movie-card/movie-card.jsx",
-                    lineNumber: 91,
-                    columnNumber: 15
+                    lineNumber: 97,
+                    columnNumber: 17
                 }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
                     className: "fav-btn",
                     onClick: removeFavoriteMovie,
                     children: "-"
                 }, void 0, false, {
                     fileName: "src/components/movie-card/movie-card.jsx",
-                    lineNumber: 93,
-                    columnNumber: 15
+                    lineNumber: 99,
+                    columnNumber: 17
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/movie-card/movie-card.jsx",
-                lineNumber: 89,
-                columnNumber: 11
+                lineNumber: 95,
+                columnNumber: 13
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/movie-card/movie-card.jsx",
-        lineNumber: 81,
-        columnNumber: 9
+        lineNumber: 87,
+        columnNumber: 11
     }, undefined);
 };
-_s(MovieCard, "lh6fxD9+vLbuebOO0x4Y5WwBqk4=");
+_s(MovieCard, "ln5uJOXQtrG3XqEU2ndKjK/LN0E=");
 _c = MovieCard;
 MovieCard.propTypes = {
     movie: (0, _propTypesDefault.default).shape({
@@ -6261,9 +6263,18 @@ MovieCard.propTypes = {
         featured: (0, _propTypesDefault.default).bool.isRequired,
         actors: (0, _propTypesDefault.default).array.isRequired
     }).isRequired,
-    token: (0, _propTypesDefault.default).string.isRequired,
+    token: (0, _propTypesDefault.default).string,
+    storedToken: (0, _propTypesDefault.default).string,
     setUser: (0, _propTypesDefault.default).func.isRequired,
-    user: (0, _propTypesDefault.default).string.isRequired
+    user: (0, _propTypesDefault.default).shape({
+        Username: (0, _propTypesDefault.default).string.isRequired,
+        Password: (0, _propTypesDefault.default).string,
+        Email: (0, _propTypesDefault.default).string.isRequired,
+        Birthday: (0, _propTypesDefault.default).string.isRequired,
+        FavoriteMovies: (0, _propTypesDefault.default).array.isRequired,
+        movies: (0, _propTypesDefault.default).array
+    }).isRequired,
+    visibilityToggle: (0, _propTypesDefault.default).bool
 };
 exports.default = MovieCard;
 var _c;
@@ -42068,7 +42079,14 @@ _s(NavigationBar, "CQleFeTFs9PRN+8EySFHedo5FtE=", false, function() {
 _c = NavigationBar;
 // Add prop type validation
 NavigationBar.propTypes = {
-    user: (0, _propTypesDefault.default).string,
+    user: (0, _propTypesDefault.default).shape({
+        Username: (0, _propTypesDefault.default).string.isRequired,
+        Password: (0, _propTypesDefault.default).string,
+        Email: (0, _propTypesDefault.default).string.isRequired,
+        Birthday: (0, _propTypesDefault.default).string.isRequired,
+        FavoriteMovies: (0, _propTypesDefault.default).array.isRequired,
+        movies: (0, _propTypesDefault.default).array
+    }).isRequired,
     onLoggedOut: (0, _propTypesDefault.default).func.isRequired
 };
 var _c;
@@ -42259,7 +42277,7 @@ const ProfileView = ({ user, storedUser, storedToken, movies })=>{
                         md: 3,
                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
                             movie: movie,
-                            storedToken: storedToken,
+                            token: storedToken,
                             storedUser: storedUser,
                             user: user,
                             setUser: setUserData
@@ -42453,7 +42471,7 @@ ProfileView.propTypes = {
         Password: (0, _propTypesDefault.default).string,
         Email: (0, _propTypesDefault.default).string.isRequired,
         Birthday: (0, _propTypesDefault.default).string.isRequired,
-        favoriteMovies: (0, _propTypesDefault.default).array.isRequired,
+        FavoriteMovies: (0, _propTypesDefault.default).array.isRequired,
         movies: (0, _propTypesDefault.default).array
     }).isRequired
 };

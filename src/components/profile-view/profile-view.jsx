@@ -123,7 +123,7 @@ export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
                         <Col className="mb-4" key={movie.id} md={3}>
                             <MovieCard
                                 movie={movie}
-                                storedToken={storedToken}
+                                token={storedToken}
                                 storedUser={storedUser}
                                 user={user}
                                 setUser = {setUserData}
@@ -203,7 +203,7 @@ user: PropTypes.shape({
     Password: PropTypes.string,
     Email: PropTypes.string.isRequired,
     Birthday: PropTypes.string.isRequired,
-    favoriteMovies: PropTypes.array.isRequired,
+    FavoriteMovies: PropTypes.array.isRequired,
     movies: PropTypes.array
 }).isRequired
 };
