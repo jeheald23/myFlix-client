@@ -153,7 +153,7 @@ export const MainView = () => {
                             token = {token}
                             setUser={setUser}
                             user={user}
-                            visibilityToggle="false"   
+                            visibilityToggle={false}   
                             />
                       </Col>
                     ))}

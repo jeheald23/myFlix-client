@@ -5875,7 +5875,7 @@ const MainView = ()=>{
                                                     token: token,
                                                     setUser: setUser,
                                                     user: user,
-                                                    visibilityToggle: "false"
+                                                    visibilityToggle: false
                                                 }, void 0, false, void 0, void 0)
                                             }, movie.id, false, void 0, void 0))
                                     ]
@@ -42287,7 +42287,7 @@ const ProfileView = ({ user, storedUser, storedToken, movies })=>{
                             storedUser: storedUser,
                             user: user,
                             setUser: setUserData,
-                            visibilityToggle: "true"
+                            visibilityToggle: true
                         }, void 0, false, {
                             fileName: "src/components/profile-view/profile-view.jsx",
                             lineNumber: 124,
