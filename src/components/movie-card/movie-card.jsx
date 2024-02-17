@@ -13,8 +13,12 @@ export const MovieCard = ({ movie, user, token, setUser, visibilityToggle }) => 
   useEffect(() => {
     if (user?.FavoriteMovies && user.FavoriteMovies.includes(movie.id)) {
       setIsFavorite(true);
+    if (visibilityToggle)
+      setIsVisible(true);
     } else {
       setIsFavorite(false);
+      if(visibilityToggle)
+      setIsVisible(false);
     }
   }, [user, movie.id]);
 

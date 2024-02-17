@@ -127,6 +127,7 @@ export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
                                 storedUser={storedUser}
                                 user={user}
                                 setUser = {setUserData}
+                                visibilityToggle="true"
                             />
                         </Col>
                     );

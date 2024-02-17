@@ -152,7 +152,8 @@ export const MainView = () => {
                             movie = {movie}
                             token = {token}
                             setUser={setUser}
-                            user={user}   
+                            user={user}
+                            visibilityToggle="false"   
                             />
                       </Col>
                     ))}
