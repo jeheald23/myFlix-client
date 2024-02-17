@@ -1,3 +1,4 @@
+import React from "react";
 import{ useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -27,7 +28,7 @@ export const SignupView = () => {
     }).then((response) => {
       if (response.ok) {
         alert("Signup successful");
-        window.location.reload();
+        window.location.href="/login";
       } else {
         alert("Signup failed");
       }
