@@ -35,19 +35,19 @@ export const MovieCard = ({ movie, user, token, setUser, visibilityToggle }) => 
             if (response.ok) {
               return response.json();
             } else {
-              console.log("Failed to add favorite movie");
-              throw new Error("Failed to add favorite movie");
+              console.log(`Error add ${movie.title} to your favorites`);
+              throw new Error(`Error adding ${movie.title} to your favorites`);
             }
           })
           .then((updatedUser) => {
-            alert("successfully added to favorites");
+            alert(`${movie.title} has been added to your favorites`);
             localStorage.setItem("user", JSON.stringify(updatedUser));
             setUser(updatedUser);
             setIsFavorite(true);
           })
           .catch((error) => {
-            console.error("Error adding favorite movie:", error);
-            alert("Failed to add favorite movie");
+            console.error(`Error adding ${movie.title}:`, error);
+            alert(`Error adding ${movie.title} to your favorites`);
           });
       };
 
@@ -63,11 +63,11 @@ export const MovieCard = ({ movie, user, token, setUser, visibilityToggle }) => 
             if (response.ok) {
               return response.json();
             } else {
-              throw new Error("Failed to remove favorite movie");
+              throw new Error(`Error removing ${movie.title} from your favorites`);
             }
           })
           .then((updatedUser) => {
-            alert("successfully deleted from favorites");
+            alert(`${movie.title} has been removed from your favorites`);
             localStorage.setItem("user", JSON.stringify(updatedUser));
             setUser(updatedUser);
             setIsFavorite(false);
@@ -77,8 +77,8 @@ export const MovieCard = ({ movie, user, token, setUser, visibilityToggle }) => 
 
           })
           .catch((error) => {
-            console.error("Error removing favorite movie:", error);
-            alert("Failed to remove favorite movie");
+            console.error(`Error removing ${movie.title} from your favorites:`, error);
+            alert(`Error removing ${movie.title} from your favorites`);
           });
       };
 
@@ -108,36 +108,36 @@ export const MovieCard = ({ movie, user, token, setUser, visibilityToggle }) => 
       );
   };
 
-    MovieCard.propTypes = {
-      movie: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        releaseYear: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        genre: PropTypes.shape({
-          name: PropTypes.string.isRequired,
-          description: PropTypes.string.isRequired,
-        }),
-        director: PropTypes.shape({
-          name: PropTypes.string.isRequired,
-          bio: PropTypes.string.isRequired,
-        }),
-        featured: PropTypes.bool.isRequired,
-        actors: PropTypes.array.isRequired,
-      }).isRequired,
-      token: PropTypes.string,
-      storedToken: PropTypes.string,
-      setUser: PropTypes.func.isRequired,
-      user: PropTypes.shape({
-        Username: PropTypes.string.isRequired,
-        Password: PropTypes.string,
-        Email: PropTypes.string.isRequired,
-        Birthday: PropTypes.string.isRequired,
-        FavoriteMovies: PropTypes.array.isRequired,
-        movies: PropTypes.array
-    }).isRequired,
-    visibilityToggle: PropTypes.bool
-    };
+MovieCard.propTypes = {
+  movie: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    releaseYear: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    genre: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+    }),
+    director: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      bio: PropTypes.string.isRequired,
+    }),
+    featured: PropTypes.bool.isRequired,
+    actors: PropTypes.array.isRequired,
+  }).isRequired,
+  token: PropTypes.string,
+  storedToken: PropTypes.string,
+  setUser: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    Username: PropTypes.string.isRequired,
+    Password: PropTypes.string,
+    Email: PropTypes.string.isRequired,
+    Birthday: PropTypes.string.isRequired,
+    FavoriteMovies: PropTypes.array.isRequired,
+    movies: PropTypes.array
+  }).isRequired,
+  visibilityToggle: PropTypes.bool
+};
 
 export default MovieCard;
