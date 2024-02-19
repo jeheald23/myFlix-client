@@ -1,14 +1,13 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { MovieCard } from "../movie-card/movie-card";
-import { MovieView } from "../movie-view/movie-view";
-import { LoginView } from "../login-view/login-view";
-import { SignupView } from "../signup-view/signup-view";
+import React, { useState, useEffect } from "react";
+import { useParams, BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import { NavigationBar } from "../navigation-bar/navigation-bar.jsx";
 import { ProfileView } from "../profile-view/profile-view.jsx";
+import { MovieView } from "../movie-view/movie-view";
+import { MovieCard } from "../movie-card/movie-card";
+import { SignupView } from "../signup-view/signup-view";
+import { LoginView } from "../login-view/login-view";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -25,31 +24,29 @@ export const MainView = () => {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then((response) => {
-        if (!response.ok){
-          throw new Error("Error fetching movies");
-        } 
-        return response.json();
-      })
+          if (!response.ok) {
+            throw new Error("Error fetching movies");
+          }
+          return response.json();
+        })
         .then((data) => {
-          const moviesFromApi = data.map((movie) => {
-            return {
-              id: movie._id,
-              title: movie.title,
-              releaseYear: movie.releaseYear,
-              image: movie.image,
-              description: movie.description,
-              genre: {
-                name: movie.genre.name,
-                description: movie.genre.description,
-              },
-              director: {
-                name: movie.director.name,
-                bio: movie.director.bio,
-              },
-              actors: movie.actors,
-              featured: movie.featured,
-            };
-          });
+          const moviesFromApi = data.map((movie) => ({
+            id: movie._id,
+            title: movie.title,
+            releaseYear: movie.releaseYear,
+            image: movie.image,
+            description: movie.description,
+            genre: {
+              name: movie.genre.name,
+              description: movie.genre.description,
+            },
+            director: {
+              name: movie.director.name,
+              bio: movie.director.bio,
+            },
+            actors: movie.actors,
+            featured: movie.featured,
+          }));
 
           setMovies(moviesFromApi);
         })
@@ -61,10 +58,6 @@ export const MainView = () => {
         });
     }
   }, [token]);
-
-  
-
-  
 
   return (
     <BrowserRouter>
@@ -110,11 +103,10 @@ export const MainView = () => {
               </>
             }
           />
-          <>
           <Route 
-          path="/users/:Username" 
-          element={<ProfileView user={user} storedUser={storedUser} storedToken={storedToken} movies={movies} />} />
-          </>
+            path="/users/:Username" 
+            element={<ProfileView user={user} storedUser={storedUser} storedToken={storedToken} movies={movies} />} 
+          />
           <Route
             path="/movies/:title"
             element={
@@ -127,7 +119,12 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <Col md={8}>
-                    <MovieView movies={movies} />
+                    <MovieView
+                      movies={movies}
+                      user={user}
+                      token={token}
+                      setUser={setUser}
+                    />
                   </Col>
                 )}
               </>
@@ -149,12 +146,12 @@ export const MainView = () => {
                     {movies.map((movie) => (
                       <Col className="mb-4" key={movie.id} md={3}>
                         <MovieCard
-                            movie = {movie}
-                            token = {token}
-                            setUser={setUser}
-                            user={user}
-                            visibilityToggle={false}   
-                            />
+                          movie={movie}
+                          token={token}
+                          setUser={setUser}
+                          user={user}
+                          visibilityToggle={false}   
+                        />
                       </Col>
                     ))}
                   </>
@@ -164,8 +161,6 @@ export const MainView = () => {
           />
         </Routes>
       </Row>
-      <div>
-    </div>
     </BrowserRouter>
   );
 };
