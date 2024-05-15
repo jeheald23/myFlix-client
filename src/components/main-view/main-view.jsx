@@ -6,58 +6,63 @@ import { NavigationBar } from "../navigation-bar/navigation-bar.jsx";
 import { ProfileView } from "../profile-view/profile-view.jsx";
 import { MovieView } from "../movie-view/movie-view";
 import { MovieCard } from "../movie-card/movie-card";
-import { SignupView } from "../signup-view/signup-view";
+import { SignupView } from "../signup-view/signup-view.js";
 import { LoginView } from "../login-view/login-view";
+import { useSelector, useDispatch } from "react-redux";
+import { setMovies } from "../../redux/movies.js";
+import { MoviesList } from "../movies-list/movies-list.jsx";
 
 export const MainView = () => {
+  const movies = useSelector((state) => state.movies.list);
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
   const [user, setUser] = useState(storedUser || "");
   const [token, setToken] = useState(storedToken || "");
-  const [movies, setMovies] = useState([]);
   const { title } = useParams();
   const [loadingMovies, setLoadingMovies] = useState(true);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (token) {
       fetch("https://myflixapp-api-3e4d3ace1043.herokuapp.com/movies", {
         headers: { Authorization: `Bearer ${token}` }
       })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Error fetching movies");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          const moviesFromApi = data.map((movie) => ({
-            id: movie._id,
-            title: movie.title,
-            releaseYear: movie.releaseYear,
-            image: movie.image,
-            description: movie.description,
-            genre: {
-              name: movie.genre.name,
-              description: movie.genre.description,
-            },
-            director: {
-              name: movie.director.name,
-              bio: movie.director.bio,
-            },
-            actors: movie.actors,
-            featured: movie.featured,
-          }));
-
-          setMovies(moviesFromApi);
-        })
-        .catch((error) => {
-          console.error("Error fetching movies:", error);
-        })
-        .finally(() => {
-          setLoadingMovies(false);
-        });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error fetching movies");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const moviesFromApi = data.map((movie) => ({
+          id: movie._id,
+          title: movie.title,
+          releaseYear: movie.releaseYear,
+          image: movie.image,
+          description: movie.description,
+          genre: {
+            name: movie.genre.name,
+            description: movie.genre.description,
+          },
+          director: {
+            name: movie.director.name,
+            bio: movie.director.bio,
+          },
+          actors: movie.actors,
+          featured: movie.featured,
+        }));
+  
+        dispatch(setMovies(moviesFromApi));
+      })
+      .catch((error) => {
+        console.error("Error fetching movies:", error);
+      })
+      .finally(() => {
+        setLoadingMovies(false);
+      });
     }
-  }, [token]);
+  }, [token, movies]); // Include 'movies' as a dependency
 
   return (
     <BrowserRouter>
@@ -105,9 +110,14 @@ export const MainView = () => {
           />
           <Route 
             path="/users/:Username" 
-            element={<ProfileView user={user} storedUser={storedUser} storedToken={storedToken} movies={movies} />} 
+            element={<ProfileView 
+              user={user} 
+              storedUser={storedUser} 
+              storedToken={storedToken} 
+              movies={movies} 
+              />} 
           />
-          <Route
+         <Route
             path="/movies/:title"
             element={
               <>
@@ -115,7 +125,7 @@ export const MainView = () => {
                   <Navigate to="/login" replace />
                 ) : loadingMovies ? (
                   <Col>Loading...</Col>
-                ) : movies.length === 0 ? (
+                ) : movies && movies.length === 0 ? (
                   <Col>The list is empty!</Col>
                 ) : (
                   <Col md={8}>
@@ -127,34 +137,21 @@ export const MainView = () => {
                     />
                   </Col>
                 )}
-              </>
-            }
-          />
+            </>
+          }
+        />
           <Route
             path="/"
             element={
               <>
-                {!user ? (
-                  <Navigate to="/login" replace />
-                ) : loadingMovies ? (
-                  <Col>Loading...</Col>
-                ) : movies.length === 0 ? (
-                  <Col>The list is empty!</Col>
+                {user ? (
+                  loadingMovies ? (
+                    <Col>Loading...</Col>
+                  ) : (
+                    <MoviesList />
+                  )
                 ) : (
-                  <>
-                    {title === undefined && <Col md={12}><h1>Browse All Movies</h1></Col>}
-                    {movies.map((movie) => (
-                      <Col className="mb-4" key={movie.id} md={3}>
-                        <MovieCard
-                          movie={movie}
-                          token={token}
-                          setUser={setUser}
-                          user={user}
-                          visibilityToggle={false}   
-                        />
-                      </Col>
-                    ))}
-                  </>
+                  <Navigate to="/login" replace />
                 )}
               </>
             }

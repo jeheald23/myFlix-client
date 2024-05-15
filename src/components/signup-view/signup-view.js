@@ -1,16 +1,32 @@
-import React from "react";
-import{ useState } from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router";
 
 export const SignupView = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    // Basic email format validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    // Basic birthday format validation
+    const today = new Date();
+    const selectedDate = new Date(birthday);
+    if (selectedDate >= today) {
+      alert("Please enter a valid birthday.");
+      return;
+    }
 
     const data = {
       Username: username,
@@ -28,7 +44,7 @@ export const SignupView = () => {
     }).then((response) => {
       if (response.ok) {
         alert("Signup successful. Please login to continue.");
-        window.location.href="/login";
+        navigate("/login"); // Navigate to login page
       } else {
         alert("Signup failed");
       }
