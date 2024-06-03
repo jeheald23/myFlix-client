@@ -23,7 +23,7 @@ export const MovieCard = ({ movie, user, token, setUser, visibilityToggle }) => 
   }, [user, movie.id]);
 
       const addFavoriteMovie = () => { 
-        console.log(movie)
+        console.log(token)
         fetch(`https://myflixapp-api-3e4d3ace1043.herokuapp.com/users/${Username}/movies/${movie.id}`, {
           method: "POST",
           headers: {

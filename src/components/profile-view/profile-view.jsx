@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 
 
-export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
+export const ProfileView = ({ user, storedUser, storedToken, movies, setUser }) => {
     const [userData, setUserData] = useState(user || null);
     const [Username, setUsername] = useState(storedUser ? storedUser.Username : '');
     const [Password, setPassword] = useState("");
@@ -73,6 +73,7 @@ export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
         .then((updatedUser) => {
             localStorage.setItem('user', JSON.stringify(updatedUser));
             setUserData(updatedUser);
+            setUser(updatedUser);
             alert('Update successful');
         })
         .catch((error) => {
@@ -102,6 +103,11 @@ export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
         });
     };
 
+    const formatDate = (dateStr) => {
+        const d = new Date(dateStr);
+        return `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
+    };
+
     return (
         <div>
             <div>
@@ -111,7 +117,7 @@ export const ProfileView = ({ user, storedUser, storedToken, movies }) => {
             <div>
                 <p>Username: {userData.Username}</p>
                 <p>Email: {userData.Email}</p>
-                <p>Birthday: {userData.Birthday}</p>
+                <p>Birthday: {formatDate(userData.Birthday)}</p>
             </div>
             
             <h2>My Favorite Movies</h2>
@@ -206,5 +212,6 @@ user: PropTypes.shape({
     Birthday: PropTypes.string.isRequired,
     FavoriteMovies: PropTypes.array.isRequired,
     movies: PropTypes.array
-}).isRequired
+}).isRequired,
+setUser:PropTypes.func.isRequired
 };

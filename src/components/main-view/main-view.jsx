@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setMovies } from "../../redux/movies.js";
 import { MoviesList } from "../movies-list/movies-list.jsx";
 
+
 export const MainView = () => {
   const movies = useSelector((state) => state.movies.list);
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -62,7 +63,7 @@ export const MainView = () => {
         setLoadingMovies(false);
       });
     }
-  }, [token, movies]); // Include 'movies' as a dependency
+  }, [token]); // Include 'movies' as a dependency
 
   return (
     <BrowserRouter>
@@ -101,6 +102,7 @@ export const MainView = () => {
                       onLoggedIn={(user, token) => {
                         setUser(user);
                         setToken(token);
+          
                       }}
                     />
                   </Col>
@@ -115,6 +117,7 @@ export const MainView = () => {
               storedUser={storedUser} 
               storedToken={storedToken} 
               movies={movies} 
+              setUser={setUser}
               />} 
           />
          <Route
@@ -148,7 +151,11 @@ export const MainView = () => {
                   loadingMovies ? (
                     <Col>Loading...</Col>
                   ) : (
-                    <MoviesList />
+                    <MoviesList 
+                    user={user}
+                    token={token}
+                    setUser={setUser}
+                    />
                   )
                 ) : (
                   <Navigate to="/login" replace />
